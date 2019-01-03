@@ -1,13 +1,15 @@
 
 <view class="container more">
   <view class="user flex-wrp">
-    <view class="avatar flex-item">
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    </view>
-    <view class="user-info flex-item">
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      <text class="edit">查看或编辑个人主页</text>
-    </view>
+    <button class="user flex-wrp" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" plain="true">
+      <view class="avatar flex-item">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      </view>
+      <view class="user-info flex-item">
+          <text class="userinfo-nickname">{{userInfo.province+" "+userInfo.city+" "+userInfo.nickName}}</text>
+          <text class="edit">查看或编辑个人主页</text>
+      </view>
+    </button>
   </view>
 
   <view class="my">

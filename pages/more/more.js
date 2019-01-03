@@ -4,12 +4,18 @@ var app = getApp()
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {}
+    userInfo: {},
   },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: ''
+    })
+  },
+  //微信授权登录
+  onGotUserInfo: function (e) {
+    this.setData({
+      userInfo: e.detail.userInfo
     })
   },
   onLoad: function () {
