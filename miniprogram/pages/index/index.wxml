@@ -10,7 +10,7 @@
       </view>
   </view>
 
-    <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+    <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" wx:key="key" data-idx="{{idx}}">
         <view class="feed-item">
             <view class="feed-source">
                 <a class="">
