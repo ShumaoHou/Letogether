@@ -57,7 +57,6 @@ Page({
         complete: res => {
           console.log('loginQuery调用结果:', res)
           if (res.result.data.length == 0 ) {
-
             // 调用云函数插入用户信息到users
             wx.cloud.callFunction({
               name: 'loginAdd',
