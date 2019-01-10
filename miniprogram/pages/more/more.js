@@ -56,15 +56,15 @@ Page({
         country: e.detail.userInfo.country
       })
       console.log('首次登录用户信息：', e.detail.userInfo)
-      // 调用云函数查询用户信息
+      // 调用云函数登录
       wx.cloud.callFunction({
-        name: 'loginQuery',
+        name: 'login',
         complete: res => {
-          console.log('loginQuery调用结果:', res)
-          // 数据库无用户信息，则调用云函数插入用户信息到users
+          console.log('login调用结果:', res)
+          // 数据库无用户信息，则调用云函数注册
           if (res.result.data.length == 0 ) {
             wx.cloud.callFunction({
-              name: 'loginAdd',
+              name: 'register',
               data: {
                 avatarUrl: e.detail.userInfo.avatarUrl,
                 nickName: e.detail.userInfo.nickName,
@@ -73,7 +73,7 @@ Page({
                 country: e.detail.userInfo.country
               },
               complete: res => {
-                console.log('loginAdd调用结果:', res)
+                console.log('register调用结果:', res)
               }
             })
           } else {  // 加载数据库的用户信息
