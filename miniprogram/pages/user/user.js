@@ -25,6 +25,7 @@ Page({
   },
   // 上传图片
   doUpload: function() {
+    var that = this
     // 选择图片
     wx.chooseImage({
       count: 1,
@@ -48,10 +49,10 @@ Page({
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
             app.globalData.userInfo.avatarUrl = filePath
-            this.setData({
+            that.setData({
               thisApp : app,
             })
-            console.log('头像：')
+            console.log('thisApp：' + thisApp)
           },
           fail: e => {
             console.error('[上传文件] 失败：', e)
