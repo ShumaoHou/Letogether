@@ -8,11 +8,11 @@
     bindgetuserinfo="onGetUserInfo"
     plain="true">
       <view class="avatar flex-item">
-        <image class="userinfo-avatar" src="{{thisApp.globalData.userInfo.avatarUrl}}" background-size="cover"></image>
+        <image class="userinfo-avatar" src="{{thisData.userInfo.avatarUrl}}" background-size="cover"></image>
       </view>
       <view class="user-info flex-item">
-          <text class="userinfo-nickname">{{thisApp.globalData.userInfo.nickName +" "+ thisApp.globalData.array.genderArray[thisApp.globalData.userInfo.gender]}}</text>
-          <text class="edit">{{thisApp.globalData.userInfo.region[0] +" "+ thisApp.globalData.userInfo.region[1] +" "+ thisApp.globalData.userInfo.region[2] +" "}}</text>
+          <text class="userinfo-nickname">{{thisData.userInfo.nickName +" "+ thisData.array.genderArray[thisData.userInfo.gender]}}</text>
+          <text class="edit">{{thisData.userInfo.region[0] +" "+ thisData.userInfo.region[1] +" "+ thisData.userInfo.region[2] +" "}}</text>
       </view>
     </button>
   </view>

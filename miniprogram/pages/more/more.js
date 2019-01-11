@@ -5,7 +5,7 @@ var logged = false // 授权标识
 
 Page({
   data: {
-    thisApp : app,
+    thisData : app.globalData,
   },
   // 查看是否授权
   onLoad: function() {
@@ -31,7 +31,7 @@ Page({
                     app.globalData.userInfo.region = res.result.loginRes.data[0].region
                     // 加载数据库的用户信息到本页面
                     that.setData({
-                      thisApp : app
+                      thisData : app.globalData
                     })
                     logged = true //授权
                   }
@@ -62,7 +62,7 @@ Page({
             app.globalData.userInfo.region = res.result.loginRes.data[0].region
             // 加载数据库的用户信息到本页面
             that.setData({
-              thisApp : app,
+              thisData : app.globalData,
             })
           } else {  //数据库不存在用户
             // 调用云函数注册
@@ -84,7 +84,7 @@ Page({
                 app.globalData.userInfo.gender = e.detail.userInfo.gender
                 app.globalData.userInfo.region = [e.detail.userInfo.province, e.detail.userInfo.city, "全部"]
                 that.setData({
-                  thisApp : app
+                  thisData : app.globalData,
                 })
               }
             })
@@ -104,7 +104,7 @@ Page({
  */
   onShow: function () {
     this.setData({
-      thisApp: app
+      thisData: app.globalData,
     })
   },
 })

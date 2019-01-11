@@ -2,7 +2,7 @@
 <view class="container more">
   <view class="user flex-wrp">
     <view class="avatar flex-item" bindtap="doUpload">
-      <image class="userinfo-avatar" src="{{thisApp.globalData.userInfo.avatarUrl}}" background-size="cover"></image>
+      <image class="userinfo-avatar" src="{{tempData.userInfo.avatarUrl}}" background-size="cover"></image>
     </view>
   </view>
 
@@ -13,7 +13,7 @@
         <text>昵称：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{thisApp.globalData.userInfo.nickName}}" />
+        <input maxlength="10" placeholder="{{tempData.userInfo.nickName}}" />
       </view>
     </view>
 
@@ -21,9 +21,9 @@
       <view class="myitem-name flex-item">
         <text>性别：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindPickerChange" value="{{thisApp.globalData.userInfo.gender}}" range="{{thisApp.globalData.array.genderArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindPickerChange" value="{{tempData.userInfo.gender}}" range="{{tempData.array.genderArray}}">
         <view>
-          {{thisApp.globalData.array.genderArray[thisApp.globalData.userInfo.gender]}}
+          {{tempData.array.genderArray[tempData.userInfo.gender]}}
         </view>
       </picker>
     </view>
@@ -32,13 +32,13 @@
       <view class="myitem-name flex-item">
         <text>城市：</text>
       </view>
-      <picker class="myitem-text flex-item" mode="region" bindchange="bindRegionChange" value="{{thisApp.globalData.userInfo.region}}" custom-item="全部">
+      <picker class="myitem-text flex-item" mode="region" bindchange="bindRegionChange" value="{{tempData.userInfo.region}}" custom-item="全部">
         <view class="picker">
-          {{thisApp.globalData.userInfo.region[0]}}，{{thisApp.globalData.userInfo.region[1]}}，{{thisApp.globalData.userInfo.region[2]}}
+          {{tempData.userInfo.region[0]}}，{{tempData.userInfo.region[1]}}，{{tempData.userInfo.region[2]}}
         </view>
       </picker>
     </view>
 
-    <button type="default" size="default" loading="{{loading}}" plain="plain" bindtap="default" hover-class="other-button-hover"> 确认修改 </button>
+    <button plain="plain" bindtap="bindConfirm" hover-class="other-button-hover"> 确认修改 </button>
   </view>
 </view>

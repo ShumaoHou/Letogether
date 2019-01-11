@@ -5,22 +5,23 @@ var logged = false // 登录标识
 
 Page({
   data: {
-    thisApp: app,
+    thisData: app.globalData,
+    tempData: app.globalData, //用于缓存thisData数据
   },
   // 性别选择器事件
   bindPickerChange: function(e) {
     console.log('性别为', e.detail.value)
-    app.globalData.userInfo.gender = e.detail.value
+    this.data.tempData.userInfo.gender = e.detail.value
     this.setData({
-      thisApp : app
+      tempData: this.data.tempData
     })
   },
   // 地区选择器事件
   bindRegionChange: function(e) {
     console.log('地区为', e.detail.value)
-    app.globalData.userInfo.region = e.detail.value
+    this.data.tempData.userInfo.region = e.detail.value
     this.setData({
-      thisApp: app
+      tempData: this.data.tempData
     })
   },
   // 上传图片
@@ -45,14 +46,14 @@ Page({
             console.log('[上传文件] 成功：', res)
             console.log('[上传文件] 成功：', cloudPath)
             console.log('[上传文件] 成功：', filePath)
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            app.globalData.userInfo.avatarUrl = filePath
+            that.data.tempData.fileID = res.fileID
+            that.data.tempData.cloudPath = cloudPath
+            that.data.tempData.imagePath = filePath
+            that.data.tempData.userInfo.avatarUrl = filePath
             that.setData({
-              thisApp : app,
+              tempData: that.data.tempData,
             })
-            console.log('thisApp：' + thisApp)
+            console.log('tempApp：' + tempData)
           },
           fail: e => {
             console.error('[上传文件] 失败：', e)
@@ -72,4 +73,16 @@ Page({
       }
     })
   },
+  //确认按钮事件
+  bindConfirm: function() {
+    app.globalData = this.data.tempData
+    this.setData({
+      thisData: this.data.tempData, //将缓存app数据赋给app
+    })
+    //数据库更新
+    
+    wx.navigateBack({
+      delta: 1
+    })
+  }
 })
