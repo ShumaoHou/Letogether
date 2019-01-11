@@ -1,0 +1,44 @@
+<!-- more.wxml -->
+<view class="container more">
+  <view class="user flex-wrp">
+    <view class="avatar flex-item" bindtap="doUpload">
+      <image class="userinfo-avatar" src="{{avatarUrl}}" background-size="cover"></image>
+    </view>
+  </view>
+
+  <view class="my">
+
+    <view class="my-item flex-wrp">
+      <view class="myitem-name flex-item">
+        <text>昵称：</text>
+      </view>
+      <view class="myitem-text flex-item">
+        <input maxlength="10" placeholder="{{nickName}}" />
+      </view>
+    </view>
+
+    <view class="my-item flex-wrp">
+      <view class="myitem-name flex-item">
+        <text>性别：</text>
+      </view>
+      <picker class="myitem-text flex-item" bindchange="bindPickerChange" value="{{gender}}" range="{{genderArray}}">
+        <view>
+          {{app.globalData.array.genderArray[gender]}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="my-item flex-wrp">
+      <view class="myitem-name flex-item">
+        <text>城市：</text>
+      </view>
+      <picker class="myitem-text flex-item" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="全部">
+        <view class="picker">
+          {{region[0]}}，{{region[1]}}，{{region[2]}}
+        </view>
+      </picker>
+    </view>
+
+    <button type="default" size="default" loading="{{loading}}" plain="plain" bindtap="default" hover-class="other-button-hover"> 确认修改 </button>
+  </view>
+</view>

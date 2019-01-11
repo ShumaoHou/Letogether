@@ -1,3 +1,7 @@
+/**
+ * 注册函数
+ * 将当前用户信息插入到数据库中。
+ */
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 // 初始化云函数
@@ -12,11 +16,10 @@ exports.main = async(event, context) => {
   return await db.collection('users').add({
     data: {
       openid: wxContext.OPENID,
-      nickName: event.nickName,
       avatarUrl: event.avatarUrl,
-      city: event.city,
-      province: event.province,
-      country: event.country
+      nickName: event.nickName,
+      gender: event.gender,
+      region: event.region,
     }
   })
 }
