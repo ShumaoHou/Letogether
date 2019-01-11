@@ -8,10 +8,10 @@
     bindgetuserinfo="onGetUserInfo"
     plain="true">
       <view class="avatar flex-item">
-        <image class="userinfo-avatar" src="{{avatarUrl}}" background-size="cover"></image>
+        <image class="userinfo-avatar" src="{{thisApp.globalData.userInfo.avatarUrl}}" background-size="cover"></image>
       </view>
       <view class="user-info flex-item">
-          <text class="userinfo-nickname">{{region[0]+" "+region[1]+" "+nickName}}</text>
+          <text class="userinfo-nickname">{{thisApp.globalData.userInfo.region[0] +" "+ thisApp.globalData.userInfo.region[1] +" "+ thisApp.globalData.userInfo.region[2] +" "+ thisApp.globalData.userInfo.nickName}}</text>
           <text class="edit">查看或编辑个人主页</text>
       </view>
     </button>

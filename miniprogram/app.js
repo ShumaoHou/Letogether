@@ -41,7 +41,7 @@ App({
       avatarUrl: './user-unlogin.png', //用户头像
       nickName: "\n", //昵称
       gender: 0, //性别
-      region: ['广东省', '广州市', '海珠区'], //地区
+      region: ['江苏省', '南京市', '鼓楼区'], //地区
     },
   }
 })

@@ -12,7 +12,18 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
-  return await db.collection('users').where({
+  var res = await db.collection('users').where({
     openid: wxContext.OPENID
   }).get()
+  if (res.data.length >0) {
+    return {
+      login: true,
+      loginRes: res,
+    }
+  } else {
+    return {
+      login: false,
+      loginRes: res,
+    }
+  }
 }
