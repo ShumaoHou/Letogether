@@ -11,8 +11,8 @@
         <image class="userinfo-avatar" src="{{thisApp.globalData.userInfo.avatarUrl}}" background-size="cover"></image>
       </view>
       <view class="user-info flex-item">
-          <text class="userinfo-nickname">{{thisApp.globalData.userInfo.region[0] +" "+ thisApp.globalData.userInfo.region[1] +" "+ thisApp.globalData.userInfo.region[2] +" "+ thisApp.globalData.userInfo.nickName}}</text>
-          <text class="edit">查看或编辑个人主页</text>
+          <text class="userinfo-nickname">{{thisApp.globalData.userInfo.nickName +" "+ thisApp.globalData.array.genderArray[thisApp.globalData.userInfo.gender]}}</text>
+          <text class="edit">{{thisApp.globalData.userInfo.region[0] +" "+ thisApp.globalData.userInfo.region[1] +" "+ thisApp.globalData.userInfo.region[2] +" "}}</text>
       </view>
     </button>
   </view>
