@@ -39,6 +39,6 @@
       </picker>
     </view>
 
-    <button plain="plain" bindtap="bindConfirm" hover-class="other-button-hover"> 确认修改 </button>
+    <button bindtap="bindConfirm"> 确认修改 </button>
   </view>
 </view>
