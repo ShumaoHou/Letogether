@@ -1,4 +1,4 @@
-//logs.js
+//user.js
 var util = require('../../utils/util.js')
 var app = getApp()
 var logged = false // 登录标识
@@ -8,7 +8,9 @@ Page({
     thisData: app.globalData,
     tempData: app.globalData, //用于缓存thisData数据
   },
-  // 性别选择器事件
+  /**
+   * 性别选择器函数
+   */
   bindPickerChange: function(e) {
     console.log('性别为', e.detail.value)
     this.data.tempData.userInfo.gender = e.detail.value
@@ -16,7 +18,9 @@ Page({
       tempData: this.data.tempData
     })
   },
-  // 地区选择器事件
+  /**
+   * 地区选择器函数
+   */
   bindRegionChange: function(e) {
     console.log('地区为', e.detail.value)
     this.data.tempData.userInfo.region = e.detail.value
@@ -24,7 +28,9 @@ Page({
       tempData: this.data.tempData
     })
   },
-  // 上传图片
+  /**
+   * 上传图片函数
+   */
   doUpload: function() {
     var that = this
     // 选择图片
@@ -73,7 +79,9 @@ Page({
       }
     })
   },
-  //确认按钮事件
+  /**
+   * 确认修改按钮点击函数
+   */
   bindConfirm: function() {
     app.globalData = this.data.tempData
     this.setData({
@@ -81,6 +89,7 @@ Page({
     })
     //数据库更新
     
+    //页面返回
     wx.navigateBack({
       delta: 1
     })

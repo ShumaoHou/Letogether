@@ -17,13 +17,13 @@ exports.main = async(event, context) => {
   }).get()
   if (res.data.length >0) {
     return {
-      login: true,
-      loginRes: res,
+      query: true,
+      queryRes: res,
     }
   } else {
     return {
-      login: false,
-      loginRes: res,
+      query: false,
+      queryRes: res,
     }
   }
 }

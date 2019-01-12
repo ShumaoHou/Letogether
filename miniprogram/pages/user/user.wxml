@@ -1,4 +1,4 @@
-<!-- more.wxml -->
+<!-- user.wxml -->
 <view class="container more">
   <view class="user flex-wrp">
     <view class="avatar flex-item" bindtap="doUpload">
