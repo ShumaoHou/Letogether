@@ -70,24 +70,24 @@ Page({
    * 确认修改按钮点击函数
    */
   bindConfirm: function() {
-    //将本页app数据赋给全局
-    app.globalData = this.data.thisData
-    //数据库更新
-    wx.cloud.callFunction({
-      name: 'updateUser',
-      data: {
-        appData: this.data.thisData,
-      },
-      complete: res => {
-        console.log('updateUser调用结果:', res)
-        if (res.result.update) {
-          //页面返回
-          wx.navigateBack({
-            delta: 1
-          })
-        }
-      },
-      fail: console.error
-    })
+    // //将本页app数据赋给全局
+    // app.globalData = this.data.thisData
+    // //数据库更新
+    // wx.cloud.callFunction({
+    //   name: 'updateUser',
+    //   data: {
+    //     appData: this.data.thisData,
+    //   },
+    //   complete: res => {
+    //     console.log('updateUser调用结果:', res)
+    //     if (res.result.update) {
+    //       //页面返回
+    //       wx.navigateBack({
+    //         delta: 1
+    //       })
+    //     }
+    //   },
+    //   fail: console.error
+    // })
   }
 })
