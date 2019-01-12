@@ -15,6 +15,7 @@ exports.main = async(event, context) => {
   var res = await db.collection('users').where({
     openid: wxContext.OPENID
   }).get()
+  
   if (res.data.length >0) {
     return {
       query: true,

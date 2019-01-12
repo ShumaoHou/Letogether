@@ -8,45 +8,6 @@ Page({
     thisData: app.globalData,
   },
   /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function() {
-    var that = this
-    wx.getSetting({
-      success: function(res) {
-        //如果用户已经授权过
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function(res) {
-              console.log(res.userInfo)
-              //调用云函数登录
-              wx.cloud.callFunction({
-                name: 'queryUser',
-                complete: res => {
-                  console.log('queryUser调用结果:', res)
-                  if (res.result.query) {
-                    var resData = res.result.queryRes.data[0]
-                    // 将数据库查询结果保存全局变量
-                    app.globalData.userInfo.openid = resData.openid
-                    app.globalData.userInfo.avatarUrl = resData.avatarUrl
-                    app.globalData.userInfo.nickName = resData.nickName
-                    app.globalData.userInfo.gender = resData.gender
-                    app.globalData.userInfo.region = resData.region
-                    // 加载数据库的用户信息到本页面
-                    that.setData({
-                      thisData: app.globalData
-                    })
-                    logged = true //授权
-                  }
-                }
-              })
-            }
-          })
-        }
-      }
-    })
-  },
-  /**
    * 用户登录按钮点击函数
    */
   onGetUserInfo: function(e) {
@@ -58,7 +19,7 @@ Page({
         name: 'queryUser',
         complete: res => {
           console.log('queryUser调用结果:', res)
-          if (res.result.query) {
+          if (res.result.query) { //  用户已注册
             var resData = res.result.queryRes.data[0]
             // 将数据库查询结果保存全局变量
             app.globalData.userInfo.openid = resData.openid
@@ -68,14 +29,13 @@ Page({
             app.globalData.userInfo.region = resData.region
             // 加载数据库的用户信息到本页面
             that.setData({
-              thisData: app.globalData,
+              thisData: app.globalData, 
             })
-          } else { //数据库不存在用户
+          } else { // 用户未注册
             // 调用云函数注册
             wx.cloud.callFunction({
               name: 'addUser',
               data: {
-                openid: app.globalData.userInfo.openid,
                 avatarUrl: e.detail.userInfo.avatarUrl,
                 nickName: e.detail.userInfo.nickName,
                 gender: e.detail.userInfo.gender,
@@ -83,12 +43,13 @@ Page({
               },
               complete: res => {
                 console.log('addUser调用结果:', res)
-                // 加载数据库的用户信息到本页面
+                // 将数据库查询结果保存全局变量
                 app.globalData.userInfo.openid = res.result.openid
                 app.globalData.userInfo.avatarUrl = e.detail.userInfo.avatarUrl
                 app.globalData.userInfo.nickName = e.detail.userInfo.nickName
                 app.globalData.userInfo.gender = e.detail.userInfo.gender
                 app.globalData.userInfo.region = [e.detail.userInfo.province, e.detail.userInfo.city, "全部"]
+                //  加载数据库的用户信息到本页面
                 that.setData({
                   thisData: app.globalData,
                 })
@@ -109,8 +70,41 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.setData({
-      thisData: app.globalData,
+    var that = this
+
+    wx.getSetting({
+      success: function(res) {
+        //如果用户已经授权过
+        if (res.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: function(res) {
+              console.log(res.userInfo)
+              //调用云函数登录
+              wx.cloud.callFunction({
+                name: 'queryUser',
+                complete: res => {
+                  console.log('queryUser调用结果:', res)
+                  if (res.result.query) { // 用户已注册
+                    var resData = res.result.queryRes.data[0]
+                    // 将数据库查询结果保存全局变量
+                    app.globalData.userInfo.openid = resData.openid
+                    app.globalData.userInfo.avatarUrl = resData.avatarUrl
+                    app.globalData.userInfo.nickName = resData.nickName
+                    app.globalData.userInfo.gender = resData.gender
+                    app.globalData.userInfo.region = resData.region
+                    that.setData({
+                      thisData: app.globalData,
+                    })
+                    console.log("全局：" , app.globalData)
+                    logged = true //授权
+                  }
+                }
+              })
+            }
+          })
+        }
+      }
     })
   },
+
 })

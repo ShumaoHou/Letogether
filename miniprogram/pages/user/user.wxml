@@ -1,8 +1,8 @@
 <!-- user.wxml -->
 <view class="container more">
   <view class="user flex-wrp">
-    <view class="avatar flex-item" bindtap="doUpload">
-      <image class="userinfo-avatar" src="{{tempData.userInfo.avatarUrl}}" background-size="cover"></image>
+    <view class="avatar flex-item">
+      <image class="userinfo-avatar" src="{{thisData.userInfo.avatarUrl}}" background-size="cover"></image>
     </view>
   </view>
 
@@ -13,7 +13,7 @@
         <text>昵称：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{tempData.userInfo.nickName}}" />
+        <input maxlength="10" placeholder="{{thisData.userInfo.nickName}}" />
       </view>
     </view>
 
@@ -21,9 +21,9 @@
       <view class="myitem-name flex-item">
         <text>性别：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindPickerChange" value="{{tempData.userInfo.gender}}" range="{{tempData.array.genderArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindPickerChange" value="{{thisData.userInfo.gender}}" range="{{thisData.array.genderArray}}">
         <view>
-          {{tempData.array.genderArray[tempData.userInfo.gender]}}
+          {{thisData.array.genderArray[thisData.userInfo.gender]}}
         </view>
       </picker>
     </view>
@@ -32,9 +32,9 @@
       <view class="myitem-name flex-item">
         <text>城市：</text>
       </view>
-      <picker class="myitem-text flex-item" mode="region" bindchange="bindRegionChange" value="{{tempData.userInfo.region}}" custom-item="全部">
+      <picker class="myitem-text flex-item" mode="region" bindchange="bindRegionChange" value="{{thisData.userInfo.region}}" custom-item="全部">
         <view class="picker">
-          {{tempData.userInfo.region[0]}}，{{tempData.userInfo.region[1]}}，{{tempData.userInfo.region[2]}}
+          {{thisData.userInfo.region[0]}}，{{thisData.userInfo.region[1]}}，{{thisData.userInfo.region[2]}}
         </view>
       </picker>
     </view>
