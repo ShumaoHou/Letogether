@@ -18,7 +18,7 @@ Page({
   /**
    * 性别选择器函数
    */
-  bindPickerChange: function(e) {
+  bindSexChange: function(e) {
     console.log('性别为', e.detail.value)
     this.data.thisData.userInfo.gender = e.detail.value
     this.setData({

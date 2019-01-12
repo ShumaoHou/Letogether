@@ -21,7 +21,7 @@
       <view class="myitem-name flex-item">
         <text>性别：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindPickerChange" value="{{thisData.userInfo.gender}}" range="{{thisData.array.genderArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindSexChange" value="{{thisData.userInfo.gender}}" range="{{thisData.array.genderArray}}">
         <view>
           {{thisData.array.genderArray[thisData.userInfo.gender]}}
         </view>
