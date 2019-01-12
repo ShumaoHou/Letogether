@@ -18,6 +18,11 @@ Page({
       url: '../question/question'
     })
   },
+  bindCreateEvent: function() {
+    wx.navigateTo({
+      url: '../event/event'
+    })
+  },
   onLoad: function () {
     console.log('onLoad')
     var that = this

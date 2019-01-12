@@ -46,4 +46,5 @@
       </view>
     </view>
   </block>
+  <button class="createEvent" bindtap="bindCreateEvent"> 创建协游 </button>
 </scroll-view>
