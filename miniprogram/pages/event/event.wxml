@@ -50,7 +50,7 @@
       <view class="myitem-name flex-item">
         <text>人数：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{event.number}}" range="{{event.numberArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{event.number}}" range="{{numberArray}}">
         <view class="picker">
           {{event.number}}
         </view>
@@ -61,7 +61,7 @@
       <view class="myitem-name flex-item">
         <text>出行方式：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{event.travel}}" range="{{event.travelArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{event.travel}}" range="{{travelArray}}">
         <view>
           {{event.travel}}
         </view>
