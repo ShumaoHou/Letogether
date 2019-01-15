@@ -34,7 +34,7 @@ App({
   },
   globalData:{
     array:{
-      genderArray: ['女', '男'],
+      genderArray: ['未知', '男','女'],
     },
     userInfo:{
       openid: "",
