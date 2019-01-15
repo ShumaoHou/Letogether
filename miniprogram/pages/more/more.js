@@ -70,41 +70,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var that = this
-
-    wx.getSetting({
-      success: function(res) {
-        //如果用户已经授权过
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function(res) {
-              console.log(res.userInfo)
-              //调用云函数登录
-              wx.cloud.callFunction({
-                name: 'queryUser',
-                complete: res => {
-                  console.log('queryUser调用结果:', res)
-                  if (res.result.query) { // 用户已注册
-                    var resData = res.result.queryRes.data[0]
-                    // 将数据库查询结果保存全局变量
-                    app.globalData.userInfo.openid = resData.openid
-                    app.globalData.userInfo.avatarUrl = resData.avatarUrl
-                    app.globalData.userInfo.nickName = resData.nickName
-                    app.globalData.userInfo.gender = resData.gender
-                    app.globalData.userInfo.region = resData.region
-                    that.setData({
-                      thisData: app.globalData,
-                    })
-                    console.log("全局：" , app.globalData)
-                    logged = true //授权
-                  }
-                }
-              })
-            }
-          })
-        }
-      }
-    })
+    if (app.globalData.userInfo.openid != "") {
+      this.setData({
+        thisData: app.globalData,
+      })
+      logged = true
+    }
   },
 
 })
