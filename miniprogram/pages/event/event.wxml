@@ -11,7 +11,7 @@
         <text>项目名称：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{event.name}}" />
+        <input maxlength="10" placeholder="{{event.name}}" bindblur='bindNameInput'/>
       </view>
     </view>
 
@@ -20,7 +20,7 @@
         <text>目的地：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{event.destination}}" />
+        <input maxlength="10" placeholder="{{event.destination}}" bindblur='bindDestinationInput'/>
       </view>
     </view>
 
@@ -73,7 +73,7 @@
         <text>预计花费：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="0" />
+        <input maxlength="10" placeholder="0" bindblur='bindCostInput'/>
       </view>
     </view>
 

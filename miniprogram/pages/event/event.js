@@ -24,6 +24,24 @@ Page({
     }
   },
   /**
+   * 项目名输入框
+   */
+  bindNameInput: function(e){
+    this.data.event.name = e.detail.value
+  },
+  /**
+   * 目的地输入框
+   */
+  bindDestinationInput: function (e) {
+    this.data.event.destination = e.detail.value
+  },
+  /**
+   * 花费输入框
+   */
+  bindCostInput: function (e) {
+    this.data.event.cost = e.detail.value
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
