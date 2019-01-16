@@ -3,19 +3,23 @@ var util = require('../../utils/util.js')
 var app = getApp()
 var logged = false // 登录标识
 
+var desData = require('../../data/data_des.js'); // 目的地信息json数据
+
 Page({
   data: {
     numberArray: [2, 3, 4, 5, 6, 7, 8, 9, 10],
     numberIndex: 0,
     travelArray: ["步行", "公交", "自行车", "地铁", "汽车"],
     travelIndex: 0,
-    desArray: ["南京-夫子庙","南京-中山陵","南京-明孝陵"],
-    desIndex:0,
+    desArray: [],// 目的地对象数组
+    desIndex: 0,
+    desIntro: "请选择目的地~",// 目的地简介
+    desNameArray: [],// 目的地名称数组
+    imageUrl: "../../images/event/placeholder.png",
     event: {
       // 项目信息
       name: "我的协游",
-      des: "请选择",//目的地
-      imageUrl: "../../images/event/placeholder.png",
+      des: "请选择", //目的地
       date: "2019-01-01",
       time: "12:00",
       number: 2, //  人数
@@ -31,33 +35,41 @@ Page({
     }
   },
   /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function() {
+    this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
+    for (var i in desData.desArray) {
+      this.data.desNameArray.push(desData.desArray[i].name)
+    }
+    this.setData({
+      desArray: desData.desArray,
+      desNameArray: this.data.desNameArray,
+    })
+  },
+  /**
    * 项目名输入框
    */
-  bindNameInput: function(e){
+  bindNameInput: function(e) {
     this.data.event.name = e.detail.value
   },
   /**
    * 目的地选择器函数
    */
-  bindDesChange: function (e) {
-    this.data.event.des = this.data.desArray[e.detail.value]
-    this.data.event.imageUrl = "../../images/event/model/" + this.data.event.des + ".jpeg"
+  bindDesChange: function(e) {
+    this.data.event.des = this.data.desArray[e.detail.value].name
     this.setData({
       desIndex: e.detail.value,
+      desIntro: this.data.desArray[e.detail.value].intro,
+      imageUrl: this.data.desArray[e.detail.value].imageUrl,
       event: this.data.event
     })
   },
   /**
    * 花费输入框
    */
-  bindCostInput: function (e) {
+  bindCostInput: function(e) {
     this.data.event.cost = e.detail.value
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function() {
-    this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
   },
   /**
    * 日期选择器函数

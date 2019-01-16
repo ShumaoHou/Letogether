@@ -44,7 +44,6 @@ Page({
     wx.cloud.callFunction({
       name: 'queryEvent',
       complete: res => {
-        console.log('11111111', res.result.queryRes.data)
         this.setData({
           feed: res.result.queryRes.data
         });
