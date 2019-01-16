@@ -17,26 +17,26 @@
           <view class="avatar">
             <image src="{{item.feed_source_img}}"></image>
           </view>
-          <text>{{item.feed_source_name}}{{item.feed_source_txt}}</text>
+          <text>{{item.event.cost}}</text>
         </a>
         <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
       </view>
       <view class="feed-content">
         <view class="question" qid="{{question_id}}" bindtap="bindQueTap">
           <a class="question-link">
-            <text>{{item.question}}</text>
+            <text>{{item.event.name}}</text>
           </a>
         </view>
         <view class="answer-body">
           <view bindtap="bindItemTap">
-            <text class="answer-txt" aid="{{answer_id}}">{{item.answer_ctnt}}</text>
+            <text class="answer-txt" aid="{{answer_id}}">{{item.event.cost}}</text>
           </view>
           <view class="answer-actions" bindtap="bindItemTap">
             <view class="like dot">
-              <a>{{item.good_num}} 赞同 </a>
+              <a>{{item.event.cost}} 赞同 </a>
             </view>
             <view class="comments dot">
-              <a>{{item.comment_num}} 评论 </a>
+              <a>{{item.event.cost}} 评论 </a>
             </view>
             <view class="follow-it">
               <a>关注问题</a>

@@ -1,5 +1,4 @@
 //index.js
-
 var util = require('../../utils/util.js')
 var app = getApp()
 Page({
@@ -38,7 +37,16 @@ Page({
     console.log('onLoad')
     var that = this
     //调用应用实例的方法获取全局数据
-    this.getData();
+    //this.getData();
+    wx.cloud.callFunction({
+      name: 'queryEvent',
+      complete: res => {
+        console.log('11111111', res.result.queryRes.data)
+        this.setData({
+          feed: res.result.queryRes.data
+        });
+      }
+    }),
     wx.getSetting({
       success: function (res) {
         //如果用户已经授权过
