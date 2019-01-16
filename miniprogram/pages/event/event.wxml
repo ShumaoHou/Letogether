@@ -1,11 +1,11 @@
 <!-- event.wxml -->
 <view class="container more">
   <view class="head flex-wrp">
-    <image class="eventInfo-avatar" src="./placeholder.png" background-size="cover" mode='widthFix'></image>
+    <image class="eventInfo-avatar" src="{{event.imageUrl}}" background-size="cover" mode='widthFix'></image>
   </view>
 
   <view class="my">
-
+    <!-- 项目名称 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>项目名称：</text>
@@ -14,16 +14,18 @@
         <input maxlength="10" placeholder="{{event.name}}" bindblur='bindNameInput'/>
       </view>
     </view>
-
+    <!-- 目的地 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>目的地：</text>
       </view>
-      <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{event.destination}}" bindblur='bindDestinationInput'/>
-      </view>
+      <picker class="myitem-text flex-item" bindchange="bindDesChange" value="{{desIndex}}" range='{{desArray}}'>
+        <view class="picker">
+          {{event.des}}
+        </view>
+      </picker>
     </view>
-
+    <!-- 日期 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>日期：</text>
@@ -34,7 +36,7 @@
         </view>
       </picker>
     </view>
-
+    <!-- 时间 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>时间：</text>
@@ -45,29 +47,29 @@
         </view>
       </picker>
     </view>
-
+    <!-- 人数 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>人数：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{event.number}}" range="{{numberArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{numberIndex}}" range="{{numberArray}}">
         <view class="picker">
           {{event.number}}
         </view>
       </picker>
     </view>
-
+    <!-- 出行方式 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>出行方式：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{event.travel}}" range="{{travelArray}}">
+      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{travelIndex}}" range="{{travelArray}}">
         <view>
           {{event.travel}}
         </view>
       </picker>
     </view>
-
+    <!-- 预计花费 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>预计花费：</text>
@@ -76,7 +78,7 @@
         <input maxlength="10" placeholder="0" bindblur='bindCostInput'/>
       </view>
     </view>
-
+    <!-- 确认创建 -->
     <button bindtap="bindConfirm"> 确认创建 </button>
   </view>
 </view>

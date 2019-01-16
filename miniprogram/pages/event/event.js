@@ -6,11 +6,16 @@ var logged = false // 登录标识
 Page({
   data: {
     numberArray: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    numberIndex: 0,
     travelArray: ["步行", "公交", "自行车", "地铁", "汽车"],
+    travelIndex: 0,
+    desArray: ["南京-夫子庙","南京-中山陵","南京-明孝陵"],
+    desIndex:0,
     event: {
       // 项目信息
       name: "我的协游",
-      destination: "目的地",
+      des: "请选择",//目的地
+      imageUrl: "../../images/event/placeholder.png",
       date: "2019-01-01",
       time: "12:00",
       number: 2, //  人数
@@ -21,6 +26,8 @@ Page({
       signs: [0, ], // 参加人的签到，0为未签到，1为已签到。
       scores: [-1, ], // 参加人对项目评分，未评分为-1，范围0~10。
       score: 10, // 项目最终得分
+      // 项目创建人头像
+      avatarUrl: "",
     }
   },
   /**
@@ -30,10 +37,15 @@ Page({
     this.data.event.name = e.detail.value
   },
   /**
-   * 目的地输入框
+   * 目的地选择器函数
    */
-  bindDestinationInput: function (e) {
-    this.data.event.destination = e.detail.value
+  bindDesChange: function (e) {
+    this.data.event.des = this.data.desArray[e.detail.value]
+    this.data.event.imageUrl = "../../images/event/model/" + this.data.event.des + ".jpeg"
+    this.setData({
+      desIndex: e.detail.value,
+      event: this.data.event
+    })
   },
   /**
    * 花费输入框
@@ -45,9 +57,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-    this.setData({
-      thisData: app.globalData
-    })
+    this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
   },
   /**
    * 日期选择器函数
@@ -76,6 +86,7 @@ Page({
     console.log('人数为', this.data.numberArray[e.detail.value])
     this.data.event.number = this.data.numberArray[e.detail.value]
     this.setData({
+      numberIndex: e.detail.value,
       event: this.data.event
     })
   },
@@ -86,6 +97,7 @@ Page({
     console.log('出行方式为', this.data.travelArray[e.detail.value])
     this.data.event.travel = this.data.travelArray[e.detail.value]
     this.setData({
+      travelIndex: e.detail.value,
       event: this.data.event
     })
   },
@@ -94,6 +106,7 @@ Page({
    */
   bindConfirm: function() {
     this.data.event.actors[0] = app.globalData.userInfo.openid
+    console.log("event：", app.globalData.userInfo.avatarUrl)
     //数据库更新
     wx.cloud.callFunction({
       name: 'addEvent',

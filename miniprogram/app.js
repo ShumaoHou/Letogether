@@ -38,7 +38,7 @@ App({
     },
     userInfo:{
       openid: "",
-      avatarUrl: './user-unlogin.png', //用户头像
+      avatarUrl: '../../images/user/user-unlogin.png', //用户头像
       nickName: "未登录", //昵称
       gender: 0, //性别
       region: ['江苏省', '南京市', '鼓楼区'], //地区

@@ -6,17 +6,17 @@ Page({
     feed: [],
     feed_length: 0
   },
-  //事件处理函数
-  bindItemTap: function() {
+  /**
+   * 项目点击函数
+   */
+  bindEventTap: function() {
     wx.navigateTo({
       url: '../answer/answer'
     })
   },
-  bindQueTap: function() {
-    wx.navigateTo({
-      url: '../question/question'
-    })
-  },
+  /**
+   * ‘创建协游’按钮点击函数
+   */
   bindCreateEvent: function() {
     if (app.globalData.userInfo.openid == "") { //未登录，跳转登陆页面
       wx.switchTab({
@@ -33,7 +33,10 @@ Page({
       })
     }
   },
-  onLoad: function () {
+  /**
+   * 页面显示函数
+   */
+  onShow: function() {
     console.log('onLoad')
     var that = this
     //调用应用实例的方法获取全局数据
@@ -46,13 +49,13 @@ Page({
           feed: res.result.queryRes.data
         });
       }
-    }),
+    })
     wx.getSetting({
-      success: function (res) {
+      success: function(res) {
         //如果用户已经授权过
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
-            success: function (res) {
+            success: function(res) {
               console.log(res.userInfo)
               //调用云函数登录
               wx.cloud.callFunction({
@@ -76,45 +79,48 @@ Page({
       }
     })
   },
-  upper: function () {
+  upper: function() {
     wx.showNavigationBarLoading()
     this.refresh();
     console.log("upper");
-    setTimeout(function(){wx.hideNavigationBarLoading();wx.stopPullDownRefresh();}, 2000);
+    setTimeout(function() {
+      wx.hideNavigationBarLoading();
+      wx.stopPullDownRefresh();
+    }, 2000);
   },
-  lower: function (e) {
+  lower: function(e) {
     wx.showNavigationBarLoading();
     var that = this;
-    setTimeout(function(){wx.hideNavigationBarLoading();that.nextLoad();}, 1000);
+    setTimeout(function() {
+      wx.hideNavigationBarLoading();
+      that.nextLoad();
+    }, 1000);
     console.log("lower")
   },
-  //scroll: function (e) {
-  //  console.log("scroll")
-  //},
 
   //网络请求数据, 实现首页刷新
-  refresh0: function(){
+  refresh0: function() {
     var index_api = '';
     util.getData(index_api)
-        .then(function(data){
-          //this.setData({
-          //
-          //});
-          console.log(data);
-        });
+      .then(function(data) {
+        //this.setData({
+        //
+        //});
+        console.log(data);
+      });
   },
 
   //使用本地 fake 数据实现刷新效果
-  getData: function(){
+  getData: function() {
     var feed = util.getData2();
     console.log("loaddata");
     var feed_data = feed.data;
     this.setData({
-      feed:feed_data,
+      feed: feed_data,
       feed_length: feed_data.length
     });
   },
-  refresh: function(){
+  refresh: function() {
     wx.showToast({
       title: '刷新中',
       icon: 'loading',
@@ -124,21 +130,21 @@ Page({
     console.log("loaddata");
     var feed_data = feed.data;
     this.setData({
-      feed:feed_data,
+      feed: feed_data,
       feed_length: feed_data.length
     });
-    setTimeout(function(){
+    setTimeout(function() {
       wx.showToast({
         title: '刷新成功',
         icon: 'success',
         duration: 2000
       })
-    },3000)
+    }, 3000)
 
   },
 
   //使用本地 fake 数据实现继续加载效果
-  nextLoad: function(){
+  nextLoad: function() {
     wx.showToast({
       title: '加载中',
       icon: 'loading',
@@ -151,13 +157,13 @@ Page({
       feed: this.data.feed.concat(next_data),
       feed_length: this.data.feed_length + next_data.length
     });
-    setTimeout(function(){
+    setTimeout(function() {
       wx.showToast({
         title: '加载成功',
         icon: 'success',
         duration: 2000
       })
-    },3000)
+    }, 3000)
   }
 
 

@@ -1,50 +1,33 @@
 <!--index.wxml-->
 <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-  <view class="search flex-wrp">
-    <view class="search-left flex-item">
-      <image src="../../images/search.png"></image>
-      <input placeholder="搜索话题, 问题或人" placeholder-class="search-placeholder" />
-    </view>
-    <view class="search-right flex-item" bindtap="upper">
-      <image src="../../images/lighting.png"></image>
-    </view>
-  </view>
-
+  <!-- event循环列表 -->
   <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" wx:key="key" data-idx="{{idx}}">
     <view class="feed-item">
+      <!-- event-item头 -->
       <view class="feed-source">
         <a class="">
           <view class="avatar">
-            <image src="{{item.feed_source_img}}"></image>
+            <image src="{{item.event.avatarUrl}}"></image>
           </view>
-          <text>{{item.event.cost}}</text>
+          <text>{{item.event.date}} {{item.event.time}}</text>
         </a>
         <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
       </view>
+      <!-- event-item内容 -->
       <view class="feed-content">
-        <view class="question" qid="{{question_id}}" bindtap="bindQueTap">
-          <a class="question-link">
-            <text>{{item.event.name}}</text>
-          </a>
-        </view>
-        <view class="answer-body">
+        <view class="answer-body" bindtap="bindEventTap">
           <view bindtap="bindItemTap">
-            <text class="answer-txt" aid="{{answer_id}}">{{item.event.cost}}</text>
+            <text class="answer-txt" aid="{{answer_id}}">{{item.event.name}} \n {{item.event.destination}}</text>
           </view>
-          <view class="answer-actions" bindtap="bindItemTap">
-            <view class="like dot">
-              <a>{{item.event.cost}} 赞同 </a>
-            </view>
-            <view class="comments dot">
-              <a>{{item.event.cost}} 评论 </a>
-            </view>
-            <view class="follow-it">
-              <a>关注问题</a>
+          <view class="answer-actions">
+            <view class="like">
+              <a>项目评分:{{item.event.score}}分\t</a>
             </view>
           </view>
         </view>
       </view>
     </view>
+
   </block>
   <button class="createEvent" bindtap="bindCreateEvent"> 创建协游 </button>
 </scroll-view>
