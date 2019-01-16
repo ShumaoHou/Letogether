@@ -9,6 +9,9 @@
   font-size: 34rpx;
   text-align: left;
 }
+.full-width{
+  width: 100%;
+}
 
 .my{
   margin: 15rpx 0 0 0;

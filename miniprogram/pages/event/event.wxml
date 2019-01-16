@@ -2,7 +2,7 @@
 <view class="container more">
   <!-- 目的地图片 -->
   <view class="head flex-wrp">
-    <image class="eventInfo-avatar" src="{{imageUrl}}" background-size="cover" mode='widthFix'></image>
+    <image class="full-width" src="{{imageUrl}}" background-size="cover" mode='widthFix'></image>
   </view>
   <!-- 目的地简介 -->
   <view class="head">
