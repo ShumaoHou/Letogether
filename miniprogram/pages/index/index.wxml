@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y="true" class="container">
   <!-- event循环列表 -->
   <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" wx:key="key" data-idx="{{idx}}">
     <view class="feed-item">
