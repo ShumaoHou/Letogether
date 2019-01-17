@@ -1,21 +1,20 @@
 <!--index.wxml-->
 <scroll-view scroll-y="true" class="container">
+  <text class="message" hidden='{{no_event}}'>暂无项目</text>
   <!-- event循环列表 -->
-  <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" wx:key="key" data-idx="{{idx}}">
+  <block wx:for="{{feed}}" wx:for-item="item" wx:key="_id">
     <view class="feed-item">
       <!-- event-item头 -->
       <view class="feed-source">
-        <a class="">
-          <view class="avatar">
-            <image src="{{item.event.avatarUrl}}"></image>
-          </view>
-          <text>{{item.event.date}} {{item.event.time}}</text>
-        </a>
+        <view class="avatar">
+          <image src="{{item.event.avatarUrl}}"></image>
+        </view>
+        <text>{{item.event.date}} {{item.event.time}}</text>
         <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
       </view>
       <!-- event-item内容 -->
       <view class="feed-content">
-        <view class="answer-body" bindtap="bindEventTap">
+        <view class="answer-body" bindtap="bindEventTap" data-id="{{item._id}}">
           <text class="answer-txt" aid="{{answer_id}}">{{item.event.name}} \n\n {{item.event.des}}</text>
           <image class="full-width" mode="widthFix" src="{{item.event.imageUrl}}"></image>
           <view class="answer-actions">
@@ -26,7 +25,6 @@
         </view>
       </view>
     </view>
-
   </block>
   <button class="createEvent" bindtap="bindCreateEvent"> 创建协游 </button>
 </scroll-view>

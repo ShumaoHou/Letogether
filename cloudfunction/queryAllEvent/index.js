@@ -1,6 +1,6 @@
 /**
  * 查询函数
- * 查询数据库中指定_id协游项目的信息。
+ * 查询数据库中所有协游项目的信息。
  */
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
@@ -14,9 +14,9 @@ exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
   var res = await db
     .collection('events')
-    .where({
-      _id: event._id,
-    })
+    .orderBy('event.date', 'asc')
+    .orderBy('event.time', 'asc')
+    .orderBy('event.score', 'desc')
     .get()
   if (res.data.length > 0) {
     return {

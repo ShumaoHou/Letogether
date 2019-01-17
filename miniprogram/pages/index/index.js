@@ -6,14 +6,17 @@ var app = getApp()
 Page({
   data: {
     feed: [],
-    feed_length: 0
+    feed_length: 0,
+    no_event: false,
   },
   /**
    * 项目点击函数
    */
-  bindEventTap: function() {
+  bindEventTap: function(e) {
+    var id = e.currentTarget.dataset.id
+    console.log("_id:",id)
     wx.navigateTo({
-      url: '../answer/answer'
+      url: '../event/event?id=' + id
     })
   },
   /**
@@ -41,14 +44,20 @@ Page({
   onShow: function() {
     console.log('onLoad')
     var that = this
-    //调用应用实例的方法获取全局数据
-    //this.getData();
     wx.cloud.callFunction({
-      name: 'queryEvent',
+      name: 'queryAllEvent',
       complete: res => {
-        this.setData({
-          feed: res.result.queryRes.data
-        });
+        if (res.result.query) {// 如果存在数据
+          this.setData({
+            no_event: true,
+            feed: res.result.queryRes.data
+          });
+          console.log("querAllEvent:", res.result.queryRes.data)
+        } else {
+          this.setData({
+            no_event: false,
+          });
+        }
       }
     })
     wx.getSetting({

@@ -37,8 +37,26 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
-    this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
+  onLoad: function(e) {
+    var id = e.id
+    if (id == undefined) {  // 创建情况
+      this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
+    } else {  // 查看/修改项目
+      wx.cloud.callFunction({
+        name: 'queryEvent',
+        data: {
+          _id: id,
+        },
+        complete: res => {
+          if (res.result.query) {// 如果存在数据
+            this.setData({
+              event: res.result.queryRes.data[0].event,
+            });
+          }
+        }
+      })
+    }
+    // 初始化目的地对象/名称数组
     for (var i in desData.desArray) {
       this.data.desNameArray.push(desData.desArray[i].name)
     }

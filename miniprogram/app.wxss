@@ -129,3 +129,8 @@
 .full-width{
   width: 100%;
 }
+.message{
+  padding: 0;
+  font-size: 38rpx;
+  color: #000;
+}
