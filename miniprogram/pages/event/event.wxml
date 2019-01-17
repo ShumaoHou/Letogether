@@ -2,12 +2,12 @@
 <view class="container more">
   <!-- 目的地图片 -->
   <view class="head flex-wrp">
-    <image class="full-width" src="{{imageUrl}}" background-size="cover" mode='widthFix'></image>
+    <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix'></image>
   </view>
   <!-- 目的地简介 -->
   <view class="head">
     <view class="myitem-text flex-item">
-      <text>{{desIntro}}</text>
+      <text>{{event.desIntro}}</text>
     </view>
   </view>
   <view class="my">

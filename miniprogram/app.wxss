@@ -125,3 +125,7 @@
 .container .feed-item .feed-content .answer-actions .dot ::after{
   content: "•";
 }
+
+.full-width{
+  width: 100%;
+}

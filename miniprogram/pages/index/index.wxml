@@ -16,9 +16,8 @@
       <!-- event-item内容 -->
       <view class="feed-content">
         <view class="answer-body" bindtap="bindEventTap">
-          <view bindtap="bindItemTap">
-            <text class="answer-txt" aid="{{answer_id}}">{{item.event.name}} \n\n {{item.event.des}}</text>
-          </view>
+          <text class="answer-txt" aid="{{answer_id}}">{{item.event.name}} \n\n {{item.event.des}}</text>
+          <image class="full-width" mode="widthFix" src="{{item.event.imageUrl}}"></image>
           <view class="answer-actions">
             <view class="like">
               <a>项目评分:{{item.event.score}}分\t</a>

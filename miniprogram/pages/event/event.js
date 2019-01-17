@@ -11,15 +11,15 @@ Page({
     numberIndex: 0,
     travelArray: ["步行", "公交", "自行车", "地铁", "汽车"],
     travelIndex: 0,
-    desArray: [],// 目的地对象数组
+    desArray: [], // 目的地对象数组
     desIndex: 0,
-    desIntro: "请选择目的地~",// 目的地简介
-    desNameArray: [],// 目的地名称数组
-    imageUrl: "../../images/event/placeholder.png",
+    desNameArray: [], // 目的地名称数组
     event: {
       // 项目信息
       name: "我的协游",
       des: "请选择", //目的地
+      desIntro: "请选择目的地~", // 目的地简介
+      imageUrl: "../../images/event/placeholder.png",
       date: "2019-01-01",
       time: "12:00",
       number: 2, //  人数
@@ -58,10 +58,10 @@ Page({
    */
   bindDesChange: function(e) {
     this.data.event.des = this.data.desArray[e.detail.value].name
+    this.data.event.desIntro = this.data.desArray[e.detail.value].intro
+    this.data.event.imageUrl = this.data.desArray[e.detail.value].imageUrl
     this.setData({
       desIndex: e.detail.value,
-      desIntro: this.data.desArray[e.detail.value].intro,
-      imageUrl: this.data.desArray[e.detail.value].imageUrl,
       event: this.data.event
     })
   },

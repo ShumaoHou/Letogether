@@ -1,7 +1,7 @@
 // 目的地信息json数据
 var desArray = [{
     name: "南京-夫子庙",
-  imageUrl: "http://b1-q.mafengwo.net/s8/M00/5E/60/wKgBpVYDQVGAK_s4AAMKxIPZgHg21.jpeg?imageMogr2%2Fthumbnail%2F%21380x270r%2Fgravity%2FCenter%2Fcrop%2F%21380x270%2Fquality%2F100",
+    imageUrl: "http://b1-q.mafengwo.net/s8/M00/5E/60/wKgBpVYDQVGAK_s4AAMKxIPZgHg21.jpeg?imageMogr2%2Fthumbnail%2F%21380x270r%2Fgravity%2FCenter%2Fcrop%2F%21380x270%2Fquality%2F100",
     intro: "南京夫子庙位于南京市秦淮区秦淮河北岸贡院街、江南贡院以西，即南京孔庙、南京文庙、文宣王庙，为供奉祭祀孔子之地，是中国第一所国家最高学府，也是中国四大文庙，为中国古代文化枢纽之地、金陵历史人文荟萃之地，不仅是明清时期南京的文教中心，同时也是居东南各省之冠的文教建筑群，现为夫子庙秦淮风光带重要组成部分。",
   },
   {
