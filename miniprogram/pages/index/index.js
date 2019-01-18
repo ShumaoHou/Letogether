@@ -13,7 +13,7 @@ Page({
    * 项目点击函数
    */
   bindEventTap: function(e) {
-    var id = e.currentTarget.dataset.id
+    var id = e.currentTarget.dataset.id // 传递数据库_id
     console.log("_id:",id)
     wx.navigateTo({
       url: '../event/event?id=' + id
@@ -42,6 +42,7 @@ Page({
    * 页面显示函数
    */
   onShow: function() {
+    wx.showNavigationBarLoading() // 显示导航栏加载
     console.log('onLoad')
     var that = this
     wx.cloud.callFunction({
@@ -58,6 +59,7 @@ Page({
             no_event: false,
           });
         }
+        wx.hideNavigationBarLoading() // 隐藏导航栏加载
       }
     })
     wx.getSetting({

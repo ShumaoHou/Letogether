@@ -7,6 +7,10 @@ var desData = require('../../data/data_des.js'); // 目的地信息json数据
 
 Page({
   data: {
+    // 界面信息
+    confirmText: "创建",
+    confirmFlag: 0, // 0为创建项目，1为更新项目，2为申请加入项目，3为退出项目
+    // picker
     numberArray: [2, 3, 4, 5, 6, 7, 8, 9, 10],
     numberIndex: 0,
     travelArray: ["步行", "公交", "自行车", "地铁", "汽车"],
@@ -14,9 +18,10 @@ Page({
     desArray: [], // 目的地对象数组
     desIndex: 0,
     desNameArray: [], // 目的地名称数组
+    // 项目信息
+    _id: "", // 数据库:项目_id
     event: {
-      // 项目信息
-      name: "我的协游",
+      name: "",
       des: "请选择", //目的地
       desIntro: "请选择目的地~", // 目的地简介
       imageUrl: "../../images/event/placeholder.png",
@@ -30,39 +35,76 @@ Page({
       signs: [0, ], // 参加人的签到，0为未签到，1为已签到。
       scores: [-1, ], // 参加人对项目评分，未评分为-1，范围0~10。
       score: 10, // 项目最终得分
-      // 项目创建人头像
-      avatarUrl: "",
-    }
+      avatarUrl: "", // 项目创建人头像
+    },
+    // 用户相关
+    currOpenid: "", // 当前用户openid
+    isAdmin: false, // 当前用户是否为创建者
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(e) {
+    wx.showNavigationBarLoading() // 显示导航栏加载
+    var that = this
     var id = e.id
-    if (id == undefined) {  // 创建情况
+    // 初始化目的地对象/名称数组
+    for (var i in desData.desArray) {
+      this.data.desNameArray.push(desData.desArray[i].name)
+    }
+    if (id == undefined) { // 创建项目
       this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
-    } else {  // 查看/修改项目
+      this.setData({
+        isAdmin: true,
+      })
+    } else { // 查看/修改项目
       wx.cloud.callFunction({
         name: 'queryEvent',
         data: {
           _id: id,
         },
         complete: res => {
-          if (res.result.query) {// 如果存在数据
-            this.setData({
+          if (res.result.query) { // 存在数据
+            // picker初始选项定位
+            var desIndex = that.data.desNameArray.indexOf(res.result.queryRes.data[0].event.des)
+            var numberIndex = that.data.numberArray.indexOf(res.result.queryRes.data[0].event.number)
+            var travelIndex = that.data.travelArray.indexOf(res.result.queryRes.data[0].event.travel)
+            that.setData({
+              desIndex: desIndex,
+              numberIndex: numberIndex,
+              travelIndex: travelIndex,
+              _id: id,
               event: res.result.queryRes.data[0].event,
-            });
+            })
+
+            var index = that.data.event.actors.indexOf(that.data.currOpenid)
+            if (index == 0) { // 当前用户是创建者
+              this.setData({
+                confirmFlag: 1,
+                confirmText: "更新",
+                isAdmin: true,
+              })
+            } else if (index > 0) { //  当前用户是参与者
+              this.setData({
+                confirmFlag: 3,
+                confirmText: "退出",
+              })
+            } else { // 非本项目成员
+              this.setData({
+                confirmFlag: 2,
+                confirmText: "申请加入",
+              })
+            }
           }
+          wx.hideNavigationBarLoading() // 隐藏导航栏加载
         }
       })
     }
-    // 初始化目的地对象/名称数组
-    for (var i in desData.desArray) {
-      this.data.desNameArray.push(desData.desArray[i].name)
-    }
+    // 更新本页数据
     this.setData({
       desArray: desData.desArray,
       desNameArray: this.data.desNameArray,
+      currOpenid: app.globalData.userInfo.openid,
     })
   },
   /**
@@ -135,25 +177,53 @@ Page({
    * 确认修改按钮点击函数
    */
   bindConfirm: function() {
-    this.data.event.actors[0] = app.globalData.userInfo.openid
-    console.log("event：", app.globalData.userInfo.avatarUrl)
-    //数据库更新
-    wx.cloud.callFunction({
-      name: 'addEvent',
-      data: {
-        event: this.data.event,
-      },
-      complete: res => {
-        console.log('addEvent调用结果:', res)
-        //页面返回
-        wx.navigateBack({
-          delta: 1
-        })
-        wx.showToast({
-          title: '创建成功！',
-        })
-      },
-      fail: console.error
-    })
+    if (this.data.confirmFlag == 0) { // 创建项目操作
+      this.data.event.actors[0] = this.data.currOpenid
+      console.log("event：", app.globalData.userInfo.avatarUrl)
+      //  数据库操作-添加项目
+      wx.cloud.callFunction({
+        name: 'addEvent',
+        data: {
+          event: this.data.event,
+        },
+        complete: res => {
+          console.log('addEvent调用结果:', res)
+          //页面返回
+          wx.navigateBack({
+            delta: 1
+          })
+          wx.showToast({
+            title: '创建成功！',
+          })
+        },
+        fail: console.error
+      })
+    } else if (this.data.confirmFlag == 1) { // 更新项目操作
+      //  数据库操作-更新项目
+      wx.cloud.callFunction({
+        name: 'updateEvent',
+        data: {
+          _id: this.data._id,
+          event: this.data.event,
+        },
+        complete: res => {
+          console.log('updateEvent调用结果:', res)
+          if (res.result.update) {
+            //页面返回
+            wx.navigateBack({
+              delta: 1
+            })
+            wx.showToast({
+              title: '更新成功！',
+            })
+          }
+        },
+        fail: console.error
+      })
+    } else if (this.data.confirmFlag == 2) { // 申请加入项目操作
+
+    } else if (this.data.confirmFlag == 3) { // 退出项目操作
+
+    }
   }
 })

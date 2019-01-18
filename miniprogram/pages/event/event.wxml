@@ -17,7 +17,7 @@
         <text>项目名称：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{event.name}}" bindblur='bindNameInput' />
+        <input maxlength="10" value='{{event.name}}' placeholder="请输入项目名称" bindblur='bindNameInput' disabled='{{!isAdmin}}' />
       </view>
     </view>
     <!-- 目的地 -->
@@ -25,10 +25,8 @@
       <view class="myitem-name flex-item">
         <text>目的地：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindDesChange" value="{{desIndex}}" range='{{desNameArray}}'>
-        <view class="picker">
-          {{event.des}}
-        </view>
+      <picker class="myitem-text flex-item" bindchange="bindDesChange" value="{{desIndex}}" range='{{desNameArray}}' disabled='{{!isAdmin}}'>
+        {{event.des}}
       </picker>
     </view>
     <!-- 日期 -->
@@ -36,10 +34,8 @@
       <view class="myitem-name flex-item">
         <text>日期：</text>
       </view>
-      <picker class="myitem-text flex-item" mode="date" bindchange="bindDateChange" value="{{event.date}}" start="2019-01-01" end="2100-01-01">
-        <view class="picker">
-          {{event.date}}
-        </view>
+      <picker class="myitem-text flex-item" mode="date" bindchange="bindDateChange" value="{{event.date}}" start="2019-01-01" end="2100-01-01" disabled='{{!isAdmin}}'>
+        {{event.date}}
       </picker>
     </view>
     <!-- 时间 -->
@@ -47,10 +43,8 @@
       <view class="myitem-name flex-item">
         <text>时间：</text>
       </view>
-      <picker class="myitem-text flex-item" mode="time" bindchange="bindTimeChange" value="{{event.time}}" start="00:00" end="23:59">
-        <view class="picker">
-          {{event.time}}
-        </view>
+      <picker class="myitem-text flex-item" mode="time" bindchange="bindTimeChange" value="{{event.time}}" start="00:00" end="23:59" disabled='{{!isAdmin}}'>
+        {{event.time}}
       </picker>
     </view>
     <!-- 人数 -->
@@ -58,10 +52,8 @@
       <view class="myitem-name flex-item">
         <text>人数：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{numberIndex}}" range="{{numberArray}}">
-        <view class="picker">
-          {{event.number}}
-        </view>
+      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{numberIndex}}" range="{{numberArray}}" disabled='{{!isAdmin}}'>
+        {{event.number}}
       </picker>
     </view>
     <!-- 出行方式 -->
@@ -69,22 +61,20 @@
       <view class="myitem-name flex-item">
         <text>出行方式：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{travelIndex}}" range="{{travelArray}}">
-        <view>
-          {{event.travel}}
-        </view>
+      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{travelIndex}}" range="{{travelArray}}" disabled='{{!isAdmin}}'>
+        {{event.travel}}
       </picker>
     </view>
     <!-- 预计花费 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
-        <text>预计花费：</text>
+        <text>预计花费：\n(元)</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="0" bindblur='bindCostInput' />
+        <input maxlength="10" value="{{event.cost}}" bindblur='bindCostInput' disabled='{{!isAdmin}}' />
       </view>
     </view>
     <!-- 确认创建 -->
-    <button bindtap="bindConfirm"> 确认创建 </button>
+    <button bindtap="bindConfirm" type="primary" hidden='{{!isAdmin}}'> {{confirmText}} </button>
   </view>
 </view>
