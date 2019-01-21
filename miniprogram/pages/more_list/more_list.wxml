@@ -9,7 +9,8 @@
           <image src="{{item.event.avatarUrl}}"></image>
         </view>
         <text>{{item.event.date}} {{item.event.time}}</text>
-        <image class="item-more" mode="aspectFit" src="{{list_type==0?'../../images/event/delete.png':''}}"></image>
+        <image class="item-more" mode="aspectFit" src="{{list_type==0?'../../images/event/delete.png':''}}" bindtap='bindDeleteTap' data-id="{{item._id}}"></image>
+        <modal title="删除" hidden="{{deleteModalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="bindDeleteConfirm" bindcancel="bindDeleteCancel">确定删除名为“{{item.event.name}}”的项目吗？</modal>
       </view>
       <!-- event-item内容 -->
       <view class="feed-content">
