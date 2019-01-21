@@ -1,6 +1,24 @@
 //app.js
 App({
-  onLaunch: function () {
+  /**
+   * 全局变量
+   */
+  globalData: {
+    array: {
+      genderArray: ['未知', '男', '女'],
+    },
+    userInfo: {
+      openid: "",
+      avatarUrl: '../../images/user/user-unlogin.png', //用户头像
+      nickName: "未登录", //昵称
+      gender: 0, //性别
+      region: ['江苏省', '南京市', '鼓楼区'], //地区
+    },
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLaunch: function() {
     //调用API从本地缓存中获取数据
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -14,34 +32,5 @@ App({
       })
     }
   },
-  getUserInfo:function(cb){
-    var that = this
-    if(this.globalData.userInfo){
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    }else{
-      //调用登录接口
-      wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
-        }
-      })
-    }
-  },
-  globalData:{
-    array:{
-      genderArray: ['未知', '男','女'],
-    },
-    userInfo:{
-      openid: "",
-      avatarUrl: '../../images/user/user-unlogin.png', //用户头像
-      nickName: "未登录", //昵称
-      gender: 0, //性别
-      region: ['江苏省', '南京市', '鼓楼区'], //地区
-    },
-  }
+
 })

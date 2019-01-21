@@ -1,20 +1,19 @@
 //more_list.js
 var util = require('../../utils/util.js')
-var desData = require('../../data/data_des.js'); // 目的地信息json数据
 var app = getApp()
 
 Page({
   data: {
     feed: [],
     feed_length: 0,
-    deleteModalHidden: true,// 对话框隐藏
+    deleteModalHidden: true, // 对话框隐藏
     list_type: 0, // 项目列表类型。0：我创建的协游；1：我参加的协游；2：协游加入申请。
-    _id: "",// 点击的event _id
+    _id: "", // 点击的event _id
   },
   /**
- * 生命周期函数--监听页面加载
- */
-  onLoad: function (e) {
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(e) {
     var type = e.type
     if (type == "created") { // 我创建的协游
       this.setData({
@@ -43,14 +42,14 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     console.log('onLoad')
     this.queryAllEvent()
   },
   /**
    * 查询数据库并更新event列表
    */
-  queryAllEvent: function(){
+  queryAllEvent: function() {
     wx.showNavigationBarLoading() // 显示导航栏加载
     wx.cloud.callFunction({
       name: 'queryAllEvent',
@@ -63,15 +62,15 @@ Page({
           var feedData = []
           var resData = res.result.queryRes.data
           for (var i = 0; i < resData.length; i++) {
-            if (type == 0) {// 我创建的协游
+            if (type == 0) { // 我创建的协游
               if (resData[i].event.actors[0] == app.globalData.userInfo.openid) {
                 feedData.push(resData[i])
               }
-            } else if (type == 1) {// 我参加的协游
+            } else if (type == 1) { // 我参加的协游
               if (resData[i].event.actors.indexOf(app.globalData.userInfo.openid) > 0) {
                 feedData.push(resData[i])
               }
-            } else if (type == 2) {// 协游加入申请
+            } else if (type == 2) { // 协游加入申请
 
             }
           }
@@ -101,7 +100,7 @@ Page({
     var id = e.currentTarget.dataset.id // 传递数据库_id
     this.data._id = id
     console.log("Delete _id:", id)
-    if (this.data.list_type == 0){
+    if (this.data.list_type == 0) {
       this.setData({
         deleteModalHidden: false,
       })
@@ -110,7 +109,7 @@ Page({
   /**
    * 对话框--删除确认
    */
-  bindDeleteConfirm: function (e) {
+  bindDeleteConfirm: function(e) {
     wx.cloud.callFunction({
       name: 'deleteEvent',
       data: {
