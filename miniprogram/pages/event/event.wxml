@@ -1,5 +1,5 @@
 <!-- event.wxml -->
-<view class="container more">
+<view class="container more" hidden='{{hideAll}}'>
   <!-- 目的地图片 -->
   <view class="head flex-wrp">
     <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix'></image>

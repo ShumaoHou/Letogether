@@ -8,7 +8,18 @@ Page({
     thisData: app.globalData,
   },
   /**
-   * 用户登录按钮点击函数
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    if (app.globalData.userInfo.openid != "") {
+      this.setData({
+        thisData: app.globalData,
+      })
+      logged = true
+    }
+  },
+  /**
+   * 点击函数--用户登录
    */
   onGetUserInfo: function(e) {
     var that = this
@@ -29,7 +40,7 @@ Page({
             app.globalData.userInfo.region = resData.region
             // 加载数据库的用户信息到本页面
             that.setData({
-              thisData: app.globalData, 
+              thisData: app.globalData,
             })
           } else { // 用户未注册
             // 调用云函数注册
@@ -62,20 +73,32 @@ Page({
       console.log('首次登录用户信息：', e.detail.userInfo)
     } else if (logged) { // 授权，则跳转用户信息修改页面
       wx.navigateTo({
-        url: '../user/user'
+        url: '../more_user/more_user'
       })
     }
   },
   /**
-   * 生命周期函数--监听页面显示
+   * 点击函数--我创建的协游
    */
-  onShow: function() {
-    if (app.globalData.userInfo.openid != "") {
-      this.setData({
-        thisData: app.globalData,
-      })
-      logged = true
-    }
+  bindCreatedEvent: function(e) {
+    wx.navigateTo({
+      url: '../more_list/more_list?type=created'
+    })
   },
-
+  /**
+   * 点击函数--我参加的协游
+   */
+  bindInvolvedEvent: function(e) {
+    wx.navigateTo({
+      url: '../more_list/more_list?type=involved'
+    })
+  },
+  /**
+   * 点击函数--协游加入申请
+   */
+  bindApplyEvent: function(e) {
+    wx.navigateTo({
+      url: '../more_list/more_list?type=apply'
+    })
+  },
 })

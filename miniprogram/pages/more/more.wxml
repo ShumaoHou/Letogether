@@ -19,7 +19,7 @@
 
   <view class="my">
     <!-- 我创建的协游 -->
-    <view class="my-item flex-wrp">
+    <view class="my-item flex-wrp" bindtap='bindCreatedEvent'>
       <view class="myitem-icon flex-item" >
         <image src="../../images/eye.png"></image>
       </view>
@@ -28,7 +28,7 @@
       </view>
     </view>
     <!-- 我参加的协游 -->
-    <view class="my-item flex-wrp">
+    <view class="my-item flex-wrp" bindtap='bindInvolvedEvent'>
       <view class="myitem-icon flex-item" >
         <image src="../../images/star.png"></image>
       </view>
@@ -37,7 +37,7 @@
       </view>
     </view>
     <!-- 协游加入申请 -->
-    <view class="my-item flex-wrp">
+    <view class="my-item flex-wrp"  bindtap='bindApplyEvent'>
       <view class="myitem-icon flex-item" >
         <image src="../../images/draft.png"></image>
       </view>

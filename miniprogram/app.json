@@ -3,8 +3,9 @@
     "pages/index/index",
     "pages/discovery/discovery",
     "pages/more/more",
+    "pages/more_user/more_user",
+    "pages/more_list/more_list",
     "pages/answer/answer",
-    "pages/user/user",
     "pages/event/event"
   ],
   "window": {

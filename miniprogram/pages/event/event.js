@@ -8,7 +8,8 @@ var desData = require('../../data/data_des.js'); // 目的地信息json数据
 Page({
   data: {
     // 界面信息
-    confirmText: "创建",
+    hideAll: true, // 隐藏一切
+    confirmText: "创建",  // 确认按钮文本
     confirmFlag: 0, // 0为创建项目，1为更新项目，2为申请加入项目，3为退出项目
     // picker
     numberArray: [2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -56,7 +57,12 @@ Page({
       this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
       this.setData({
         isAdmin: true,
+        hideAll: false,
       })
+      wx.setNavigationBarTitle({
+        title: '创建协游',
+      })
+      wx.hideNavigationBarLoading() // 隐藏导航栏加载
     } else { // 查看/修改项目
       wx.cloud.callFunction({
         name: 'queryEvent',
@@ -75,8 +81,8 @@ Page({
               travelIndex: travelIndex,
               _id: id,
               event: res.result.queryRes.data[0].event,
+              hideAll: false,
             })
-
             var index = that.data.event.actors.indexOf(that.data.currOpenid)
             if (index == 0) { // 当前用户是创建者
               this.setData({
@@ -108,13 +114,13 @@ Page({
     })
   },
   /**
-   * 项目名输入框
+   * 输入框函数--项目名
    */
   bindNameInput: function(e) {
     this.data.event.name = e.detail.value
   },
   /**
-   * 目的地选择器函数
+   * 选择器函数--目的地
    */
   bindDesChange: function(e) {
     this.data.event.des = this.data.desArray[e.detail.value].name
@@ -126,13 +132,13 @@ Page({
     })
   },
   /**
-   * 花费输入框
+   * 输入框函数--花费
    */
   bindCostInput: function(e) {
     this.data.event.cost = e.detail.value
   },
   /**
-   * 日期选择器函数
+   * 选择器函数--日期
    */
   bindDateChange: function(e) {
     console.log('日期为', e.detail.value)
@@ -142,7 +148,7 @@ Page({
     })
   },
   /**
-   * 时间选择器函数
+   * 选择器函数--时间
    */
   bindTimeChange: function(e) {
     console.log('时间为', e.detail.value)
@@ -152,7 +158,7 @@ Page({
     })
   },
   /**
-   * 人数选择器函数
+   * 选择器函数--人数
    */
   bindNumberChange: function(e) {
     console.log('人数为', this.data.numberArray[e.detail.value])
@@ -163,7 +169,7 @@ Page({
     })
   },
   /**
-   * 出行方式选择器函数
+   * 选择器函数--出行方式
    */
   bindTravelChange: function(e) {
     console.log('出行方式为', this.data.travelArray[e.detail.value])
@@ -174,7 +180,7 @@ Page({
     })
   },
   /**
-   * 确认修改按钮点击函数
+   * 点击函数--确认修改
    */
   bindConfirm: function() {
     if (this.data.confirmFlag == 0) { // 创建项目操作

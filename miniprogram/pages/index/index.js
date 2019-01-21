@@ -7,7 +7,6 @@ Page({
   data: {
     feed: [],
     feed_length: 0,
-    no_event: false,
   },
   /**
    * 项目点击函数
@@ -50,14 +49,9 @@ Page({
       complete: res => {
         if (res.result.query) {// 如果存在数据
           this.setData({
-            no_event: true,
             feed: res.result.queryRes.data
           });
           console.log("querAllEvent:", res.result.queryRes.data)
-        } else {
-          this.setData({
-            no_event: false,
-          });
         }
         wx.hideNavigationBarLoading() // 隐藏导航栏加载
       }
