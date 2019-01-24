@@ -7,6 +7,7 @@ Page({
     feed: [],
     feed_length: 0,
     deleteModalHidden: true, // 对话框隐藏
+    deleteItemName: "",// 当前被删除的项目名称
     list_type: 0, // 项目列表类型。0：我创建的协游；1：我参加的协游；2：协游加入申请。
     _id: "", // 点击的event _id
   },
@@ -103,6 +104,7 @@ Page({
     if (this.data.list_type == 0) {
       this.setData({
         deleteModalHidden: false,
+        deleteItemName: e.currentTarget.dataset.name,
       })
     }
   },
