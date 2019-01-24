@@ -74,6 +74,18 @@
         <input maxlength="10" value="{{event.cost}}" bindblur='bindCostInput' disabled='{{!isAdmin}}' />
       </view>
     </view>
+    <!-- 参与者--循环列表 -->
+    <block wx:for="{{actors}}" wx:for-item="item" wx:for-index="index" wx:key="_id">
+      <view class="feed-item">
+        <!-- event-item头 -->
+        <view class="feed-source">
+          <view class="avatar">
+            <image src="{{item.avatarUrl}}"></image>
+          </view>
+          <text>{{item.nickName}}</text>
+        </view>
+      </view>
+    </block>
     <!-- 确认创建 -->
     <button bindtap="bindConfirm" type="primary"> {{confirmText}} </button>
   </view>

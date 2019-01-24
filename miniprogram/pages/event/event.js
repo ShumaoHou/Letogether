@@ -42,6 +42,7 @@ Page({
     // 用户相关
     currOpenid: "", // 当前用户openid
     isAdmin: false, // 当前用户是否为创建者
+    actors:[],  // 参与者的用户信息
   },
   /**
    * 生命周期函数--监听页面加载
@@ -84,6 +85,26 @@ Page({
               event: res.result.queryRes.data[0].event,
               hideAll: false,
             })
+            // 查询所有参与者，并保存到本页面
+            wx.cloud.callFunction({
+              name: 'queryAllUsers',
+              complete: res => {
+                if (res.result.query) {// 如果存在数据
+                  var allUsers = res.result.queryRes.data
+                  for (var i in allUsers) {
+                    if (this.data.event.actors.indexOf(allUsers[i].openid) >= 0) {
+                      this.data.actors.push(allUsers[i])
+                    }
+                  }
+                  this.setData({
+                    actors: this.data.actors,
+                  })
+                  console.log("actors:", this.data.actors)
+                }
+                wx.hideNavigationBarLoading() // 隐藏导航栏加载
+              }
+            })
+            // 判断当前用户类型
             var index = that.data.event.actors.indexOf(that.data.currOpenid)
             if (index == 0) { // 当前用户是创建者，按钮为更新
               this.setData({
