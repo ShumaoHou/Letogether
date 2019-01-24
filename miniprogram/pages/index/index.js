@@ -45,13 +45,13 @@ Page({
     console.log('onLoad')
     var that = this
     wx.cloud.callFunction({
-      name: 'queryAllEvent',
+      name: 'queryAllEvents',
       complete: res => {
         if (res.result.query) {// 如果存在数据
           this.setData({
             feed: res.result.queryRes.data
           });
-          console.log("querAllEvent:", res.result.queryRes.data)
+          console.log("querAllEvents:", res.result.queryRes.data)
         }
         wx.hideNavigationBarLoading() // 隐藏导航栏加载
       }

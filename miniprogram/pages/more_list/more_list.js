@@ -45,15 +45,15 @@ Page({
    */
   onShow: function() {
     console.log('onLoad')
-    this.queryAllEvent()
+    this.queryAllEvents()
   },
   /**
    * 查询数据库并更新event列表
    */
-  queryAllEvent: function() {
+  queryAllEvents: function() {
     wx.showNavigationBarLoading() // 显示导航栏加载
     wx.cloud.callFunction({
-      name: 'queryAllEvent',
+      name: 'queryAllEvents',
       data: {
         type: this.data.list_type,
       },
@@ -78,7 +78,7 @@ Page({
           this.setData({
             feed: feedData,
           });
-          console.log("querAllEvent:", res.result.queryRes.data)
+          console.log("querAllEvents:", res.result.queryRes.data)
         }
         wx.hideNavigationBarLoading() // 隐藏导航栏加载
       }
@@ -118,7 +118,7 @@ Page({
         _id: this.data._id,
       },
       complete: res => {
-        this.queryAllEvent()
+        this.queryAllEvents()
       }
     })
     this.setData({
