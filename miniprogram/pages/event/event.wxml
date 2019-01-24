@@ -75,6 +75,6 @@
       </view>
     </view>
     <!-- 确认创建 -->
-    <button bindtap="bindConfirm" type="primary" hidden='{{!isAdmin}}'> {{confirmText}} </button>
+    <button bindtap="bindConfirm" type="primary"> {{confirmText}} </button>
   </view>
 </view>

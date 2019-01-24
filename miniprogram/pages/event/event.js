@@ -32,6 +32,7 @@ Page({
       travel: "步行", // 出行方式
       cost: 0, //  花费
       actors: ["", ], // 参加人的openid,第0个为创建人的openid
+      applications: ["",], // 申请加入人的openid
       votes: [1, ], // 参加人的投票，0为反对，1为赞同。创建人默认为1，其他人默认为0。
       signs: [0, ], // 参加人的签到，0为未签到，1为已签到。
       scores: [-1, ], // 参加人对项目评分，未评分为-1，范围0~10。
@@ -53,7 +54,7 @@ Page({
     for (var i in desData.desArray) {
       this.data.desNameArray.push(desData.desArray[i].name)
     }
-    if (id == undefined) { // 创建项目
+    if (id == undefined) { // 创建项目，按钮为创建项目
       this.data.event.avatarUrl = app.globalData.userInfo.avatarUrl
       this.setData({
         isAdmin: true,
@@ -63,7 +64,7 @@ Page({
         title: '创建协游',
       })
       wx.hideNavigationBarLoading() // 隐藏导航栏加载
-    } else { // 查看/修改项目
+    } else { // 查看/修改/申请加入项目
       wx.cloud.callFunction({
         name: 'queryEvent',
         data: {
@@ -84,18 +85,18 @@ Page({
               hideAll: false,
             })
             var index = that.data.event.actors.indexOf(that.data.currOpenid)
-            if (index == 0) { // 当前用户是创建者
+            if (index == 0) { // 当前用户是创建者，按钮为更新
               this.setData({
                 confirmFlag: 1,
                 confirmText: "更新",
-                isAdmin: true,
+                isAdmin: true,  // 可修改项目值
               })
-            } else if (index > 0) { //  当前用户是参与者
+            } else if (index > 0) { //  当前用户是参与者，按钮为退出
               this.setData({
                 confirmFlag: 3,
                 confirmText: "退出",
               })
-            } else { // 非本项目成员
+            } else { // 非本项目成员，按钮为申请加入
               this.setData({
                 confirmFlag: 2,
                 confirmText: "申请加入",
@@ -204,7 +205,16 @@ Page({
         },
         fail: console.error
       })
-    } else if (this.data.confirmFlag == 1) { // 更新项目操作
+    } else if (this.data.confirmFlag == 1 || this.data.confirmFlag == 2) { // 更新项目/申请加入操作
+      if (this.data.confirmFlag == 2) { // 申请加入项目操作
+        var index = this.data.event.applications.indexOf(this.data.currOpenid)
+        if (index < 0){
+          this.data.event.applications.push(this.data.currOpenid)
+          this.setData({
+            event: this.data.event,
+          })
+        }
+      } 
       //  数据库操作-更新项目
       wx.cloud.callFunction({
         name: 'updateEvent',
@@ -220,14 +230,12 @@ Page({
               delta: 1
             })
             wx.showToast({
-              title: '更新成功！',
+              title: this.data.confirmText + '成功！',
             })
           }
         },
         fail: console.error
       })
-    } else if (this.data.confirmFlag == 2) { // 申请加入项目操作
-
     } else if (this.data.confirmFlag == 3) { // 退出项目操作
 
     }
