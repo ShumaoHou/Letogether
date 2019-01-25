@@ -1,11 +1,11 @@
 //more.js
 var util = require('../../utils/util.js')
 var app = getApp()
-var logged = false // 授权标识
 
 Page({
   data: {
     thisData: app.globalData,
+    logged: false,  // 授权标识
   },
   /**
    * 生命周期函数--监听页面显示
@@ -14,8 +14,8 @@ Page({
     if (app.globalData.userInfo.openid != "") {
       this.setData({
         thisData: app.globalData,
+        logged: true,
       })
-      logged = true
     }
   },
   /**
@@ -23,7 +23,7 @@ Page({
    */
   onGetUserInfo: function(e) {
     var that = this
-    if (!logged && e.detail.userInfo) {
+    if (!this.data.logged && e.detail.userInfo) {
       // 之前未授权，且点击授权按钮
       //调用云函数登录
       wx.cloud.callFunction({
@@ -39,8 +39,9 @@ Page({
             app.globalData.userInfo.gender = resData.gender
             app.globalData.userInfo.region = resData.region
             // 加载数据库的用户信息到本页面
-            that.setData({
+            this.setData({
               thisData: app.globalData,
+              logged: true,
             })
           } else { // 用户未注册
             // 调用云函数注册
@@ -60,18 +61,18 @@ Page({
                 app.globalData.userInfo.nickName = e.detail.userInfo.nickName
                 app.globalData.userInfo.gender = e.detail.userInfo.gender
                 app.globalData.userInfo.region = [e.detail.userInfo.province, e.detail.userInfo.city, "全部"]
-                //  加载数据库的用户信息到本页面
-                that.setData({
+                // 加载数据库的用户信息到本页面
+                this.setData({
                   thisData: app.globalData,
+                  logged: true,
                 })
               }
             })
           }
         }
       })
-      logged = true
       console.log('首次登录用户信息：', e.detail.userInfo)
-    } else if (logged) { // 授权，则跳转用户信息修改页面
+    } else if (this.data.logged) { // 授权，则跳转用户信息修改页面
       wx.navigateTo({
         url: '../more_user/more_user'
       })

@@ -1,7 +1,6 @@
 //more_user.js
 var util = require('../../utils/util.js')
 var app = getApp()
-var logged = false // 登录标识
 
 Page({
   data: {
