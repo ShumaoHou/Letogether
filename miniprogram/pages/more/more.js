@@ -16,6 +16,12 @@ Page({
         thisData: app.globalData,
         logged: true,
       })
+    } else {
+      wx.showToast({
+        title: '您未登录，请先登录！',
+        icon: 'none',
+        duration: 2000
+      })
     }
   },
   /**
