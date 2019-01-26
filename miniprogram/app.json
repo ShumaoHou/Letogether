@@ -1,12 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/discovery/discovery",
+    "pages/notice/notice",
+    "pages/event/event",
     "pages/more/more",
     "pages/more_user/more_user",
-    "pages/more_list/more_list",
-    "pages/answer/answer",
-    "pages/event/event"
+    "pages/more_list/more_list"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,7 +27,7 @@
         "selectedIconPath": "images/index_focus.png"
       },
       {
-        "pagePath": "pages/discovery/discovery",
+        "pagePath": "pages/notice/notice",
         "text": "",
         "iconPath": "images/discovery.png",
         "selectedIconPath": "images/discovery_focus.png"

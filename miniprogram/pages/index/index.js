@@ -1,5 +1,4 @@
 //index.js
-var util = require('../../utils/util.js')
 var desData = require('../../data/data_des.js'); // 目的地信息json数据
 var app = getApp()
 

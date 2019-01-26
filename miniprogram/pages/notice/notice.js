@@ -1,4 +1,4 @@
-//more_list.js
+//notice.js
 var app = getApp()
 
 Page({
