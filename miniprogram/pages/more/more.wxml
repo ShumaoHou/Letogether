@@ -21,7 +21,7 @@
     <!-- 我创建的协游 -->
     <view class="my-item flex-wrp" bindtap='bindCreatedEvent' hidden='{{!logged}}'>
       <view class="myitem-icon flex-item" >
-        <image src="../../images/eye.png"></image>
+        <image src="../../images/more/created.png"></image>
       </view>
       <view class="myitem-name flex-item">
         <text>我创建的协游</text>
@@ -30,7 +30,7 @@
     <!-- 我参加的协游 -->
     <view class="my-item flex-wrp" bindtap='bindInvolvedEvent' hidden='{{!logged}}'>
       <view class="myitem-icon flex-item" >
-        <image src="../../images/star.png"></image>
+        <image src="../../images/more/involved.png"></image>
       </view>
       <view class="myitem-name flex-item">
         <text>我参加的协游</text>
@@ -39,7 +39,7 @@
     <!-- 协游加入申请 -->
     <view class="my-item flex-wrp"  bindtap='bindApplyEvent' hidden='{{!logged}}'>
       <view class="myitem-icon flex-item" >
-        <image src="../../images/draft.png"></image>
+        <image src="../../images/more/apply.png"></image>
       </view>
       <view class="myitem-name flex-item">
         <text>协游加入申请</text>

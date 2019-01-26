@@ -23,20 +23,20 @@
       {
         "pagePath": "pages/index/index",
         "text": "",
-        "iconPath": "images/index.png",
-        "selectedIconPath": "images/index_focus.png"
+        "iconPath": "images/tabBar/index.png",
+        "selectedIconPath": "images/tabBar/index_f.png"
       },
       {
         "pagePath": "pages/notice/notice",
         "text": "",
-        "iconPath": "images/discovery.png",
-        "selectedIconPath": "images/discovery_focus.png"
+        "iconPath": "images/tabBar/notice.png",
+        "selectedIconPath": "images/tabBar/notice_f.png"
       },
       {
         "pagePath": "pages/more/more",
         "text": "",
-        "iconPath": "images/burger.png",
-        "selectedIconPath": "images/burger_focus.png"
+        "iconPath": "images/tabBar/more.png",
+        "selectedIconPath": "images/tabBar/more_f.png"
       }
     ]
   },
