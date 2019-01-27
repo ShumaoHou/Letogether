@@ -22,19 +22,19 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "",
+        "text": "协游",
         "iconPath": "images/tabBar/index.png",
         "selectedIconPath": "images/tabBar/index_f.png"
       },
       {
         "pagePath": "pages/notice/notice",
-        "text": "",
+        "text": "通知",
         "iconPath": "images/tabBar/notice.png",
         "selectedIconPath": "images/tabBar/notice_f.png"
       },
       {
         "pagePath": "pages/more/more",
-        "text": "",
+        "text": "我",
         "iconPath": "images/tabBar/more.png",
         "selectedIconPath": "images/tabBar/more_f.png"
       }

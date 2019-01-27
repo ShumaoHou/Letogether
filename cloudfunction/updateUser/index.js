@@ -20,6 +20,7 @@ exports.main = async (event, context) => {
         nickName: event.appData.userInfo.nickName,
         gender: event.appData.userInfo.gender,
         region: event.appData.userInfo.region,
+        notice: event.appData.userInfo.notice,
       },
     })
   } catch (e) {

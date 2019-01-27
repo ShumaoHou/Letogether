@@ -1,8 +1,7 @@
 //event.js
-var app = getApp()
-var logged = false // 登录标识
-
 var desData = require('../../data/data_des.js'); // 目的地信息json数据
+var dateTimeUtil = require('../../utils/dateTimeUtil.js')
+var app = getApp()
 
 Page({
   data: {
@@ -204,6 +203,7 @@ Page({
    * 点击函数--确认修改
    */
   bindConfirm: function() {
+    var that = this
     if (this.data.confirmFlag == 0) { // 创建项目操作
       this.data.event.actors[0] = this.data.currOpenid
       console.log("event：", app.globalData.userInfo.avatarUrl)
@@ -215,6 +215,27 @@ Page({
         },
         complete: res => {
           console.log('addEvent调用结果:', res)
+          app.globalData.userInfo.notice.push({
+            dt: dateTimeUtil.formatDT(new Date()),
+            txt: "您创建了项目:" + that.data.event.name,
+          })
+          // 数据库更新用户信息
+          wx.cloud.callFunction({
+            name: 'updateUser',
+            data: {
+              appData: app.globalData,
+            },
+            complete: res => {
+              console.log('updateUser调用结果:', res)
+              if (res.result.update) {
+                //页面返回
+                wx.navigateBack({
+                  delta: 1
+                })
+              }
+            },
+            fail: console.error
+          })
           //页面返回
           wx.navigateBack({
             delta: 1

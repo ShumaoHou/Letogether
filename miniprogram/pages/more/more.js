@@ -1,4 +1,5 @@
 //more.js
+var dateTimeUtil = require('../../utils/dateTimeUtil.js')
 var app = getApp()
 
 Page({
@@ -38,11 +39,7 @@ Page({
           if (res.result.query) { //  用户已注册
             var resData = res.result.queryRes.data[0]
             // 将数据库查询结果保存全局变量
-            app.globalData.userInfo.openid = resData.openid
-            app.globalData.userInfo.avatarUrl = resData.avatarUrl
-            app.globalData.userInfo.nickName = resData.nickName
-            app.globalData.userInfo.gender = resData.gender
-            app.globalData.userInfo.region = resData.region
+            app.globalData.userInfo = resData
             // 加载数据库的用户信息到本页面
             this.setData({
               thisData: app.globalData,
@@ -57,15 +54,15 @@ Page({
                 nickName: e.detail.userInfo.nickName,
                 gender: e.detail.userInfo.gender,
                 region: [e.detail.userInfo.province + "省", e.detail.userInfo.city + "市", "全部"],
+                notice: [{
+                  dt: dateTimeUtil.formatDT(new Date()), 
+                  txt: "欢迎您加入协游大家庭!"
+                  }],
               },
               complete: res => {
                 console.log('addUser调用结果:', res)
                 // 将数据库查询结果保存全局变量
-                app.globalData.userInfo.openid = res.result.openid
-                app.globalData.userInfo.avatarUrl = e.detail.userInfo.avatarUrl
-                app.globalData.userInfo.nickName = e.detail.userInfo.nickName
-                app.globalData.userInfo.gender = e.detail.userInfo.gender
-                app.globalData.userInfo.region = [e.detail.userInfo.province, e.detail.userInfo.city, "全部"]
+                app.globalData.userInfo = res.result
                 // 加载数据库的用户信息到本页面
                 this.setData({
                   thisData: app.globalData,

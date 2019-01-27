@@ -1,4 +1,4 @@
-<!--more_list.wxml-->
+<!--notice.wxml-->
 <scroll-view scroll-y="true" class="container">
   <!-- event循环列表 -->
   <block wx:for="{{feed}}" wx:for-item="item" wx:key="_id">
@@ -6,21 +6,14 @@
       <!-- event-item头 -->
       <view class="feed-source">
         <view class="avatar">
-          <image src="{{item.event.avatarUrl}}"></image>
+          <image src="../../images/notice/notice_a.png"></image>
         </view>
-        <text>{{item.event.date}} {{item.event.time}}</text>
-        <image class="item-more" mode="aspectFit" src="{{list_type==0?'../../images/event/delete.png':''}}" bindtap='bindDeleteTap' data-id="{{item._id}}" data-name="{{item.event.name}}"></image>
-        <modal title="删除" hidden="{{deleteModalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="bindDeleteConfirm" bindcancel="bindDeleteCancel">确定删除名为“{{deleteItemName}}”的协游项目吗？</modal>
+        <text>{{item.dt}}</text>
       </view>
       <!-- event-item内容 -->
       <view class="feed-content">
-        <view class="answer-body" bindtap="bindEventTap" data-id="{{item._id}}">
-          <text class="answer-txt" aid="{{answer_id}}">{{item.event.name}} \n\n {{item.event.des}}</text>
-          <view class="answer-actions">
-            <view class="like">
-              <a>项目评分:{{item.event.score}}分\t</a>
-            </view>
-          </view>
+        <view class="answer-body">
+          <text class="answer-txt">{{item.txt}}</text>
         </view>
       </view>
     </view>

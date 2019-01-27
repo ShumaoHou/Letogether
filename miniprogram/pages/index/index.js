@@ -5,7 +5,6 @@ var app = getApp()
 Page({
   data: {
     feed: [],
-    feed_length: 0,
   },
   /**
    * 项目点击函数
