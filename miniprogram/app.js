@@ -75,4 +75,15 @@ App({
       }
     })
   },
+  /**
+   * 移除数组中的元素
+   */
+  arrayRemove: function (array, val) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] == val) {
+        array.splice(i, 1);
+      }
+    }
+    return -1;
+  },
 })

@@ -30,7 +30,7 @@ Page({
       travel: "步行", // 出行方式
       cost: 0, //  花费
       actors: ["", ], // 参加人的openid,第0个为创建人的openid
-      applications: ["", ], // 申请加入人的openid
+      apply: [".", ], // 申请加入人的openid
       votes: [1, ], // 参加人的投票，0为反对，1为赞同。创建人默认为1，其他人默认为0。
       signs: [0, ], // 参加人的签到，0为未签到，1为已签到。
       scores: [-1, ], // 参加人对项目评分，未评分为-1，范围0~10。
@@ -245,15 +245,28 @@ Page({
         },
         fail: console.error
       })
-    } else if (this.data.confirmFlag == 1 || this.data.confirmFlag == 2) { // 更新项目/申请加入操作
-      if (this.data.confirmFlag == 2) { // 申请加入项目操作
-        var index = this.data.event.applications.indexOf(this.data.currOpenid)
+    } else{ // 更新项目/申请加入/退出操作
+      if (this.data.confirmFlag == 1) { // 更新项目操作
+        app.globalData.userInfo.notice.push({
+          a: "../../images/notice/update.png",
+          dt: dateTimeUtil.formatDT(new Date()),
+          txt: "您更新了项目:<" + that.data.event.name + ">",
+        })
+      } else if (this.data.confirmFlag == 2) { // 申请加入项目操作
+        var index = this.data.event.apply.indexOf(this.data.currOpenid)
         if (index < 0) {
-          this.data.event.applications.push(this.data.currOpenid)
+          this.data.event.apply.push(this.data.currOpenid)
           this.setData({
             event: this.data.event,
           })
+          app.globalData.userInfo.notice.push({
+            a:  "../../images/notice/apply.png",
+            dt: dateTimeUtil.formatDT(new Date()),
+            txt: "您申请加入了项目:<" + that.data.event.name + ">",
+          })
         }
+      } else if (this.data.confirmFlag == 3) { // 退出项目操作
+        
       }
       //  数据库操作-更新项目
       wx.cloud.callFunction({
@@ -266,11 +279,6 @@ Page({
           console.log('updateEvent调用结果:', res)
           if (res.result.update) {
             // 更新notice
-            app.globalData.userInfo.notice.push({
-              a: that.data.confirmText == "更新" ? "../../images/notice/update.png" : "../../images/notice/apply.png",
-              dt: dateTimeUtil.formatDT(new Date()),
-              txt: "您" + that.data.confirmText + "了项目:<" + that.data.event.name + ">",
-            })
             wx.cloud.callFunction({
               name: 'updateUser',
               data: {
@@ -294,8 +302,6 @@ Page({
         },
         fail: console.error
       })
-    } else if (this.data.confirmFlag == 3) { // 退出项目操作
-
     }
   }
 })
