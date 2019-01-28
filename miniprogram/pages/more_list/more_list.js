@@ -1,4 +1,5 @@
 //more_list.js
+var dateTimeUtil = require('../../utils/dateTimeUtil.js')
 var app = getApp()
 
 Page({
@@ -110,13 +111,32 @@ Page({
    * 对话框--删除确认
    */
   bindDeleteConfirm: function(e) {
+    var that = this
     wx.cloud.callFunction({
       name: 'deleteEvent',
       data: {
         _id: this.data._id,
       },
       complete: res => {
-        this.queryAllEvents()
+        // 更新notice
+        app.globalData.userInfo.notice.push({
+          a: "../../images/notice/delete.png",
+          dt: dateTimeUtil.formatDT(new Date()),
+          txt: "您删除了项目:<" + that.data.deleteItemName + ">",
+        })
+        wx.cloud.callFunction({
+          name: 'updateUser',
+          data: {
+            appData: app.globalData,
+          },
+          complete: res => {
+            console.log('updateUser调用结果:', res)
+            if (res.result.update) {
+              that.queryAllEvents()
+            }
+          },
+          fail: console.error
+        })
       }
     })
     this.setData({

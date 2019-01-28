@@ -7,7 +7,7 @@ Page({
   data: {
     // 界面信息
     hideAll: true, // 隐藏一切
-    confirmText: "创建",  // 确认按钮文本
+    confirmText: "创建", // 确认按钮文本
     confirmFlag: 0, // 0为创建项目，1为更新项目，2为申请加入项目，3为退出项目
     // picker
     numberArray: [2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -30,7 +30,7 @@ Page({
       travel: "步行", // 出行方式
       cost: 0, //  花费
       actors: ["", ], // 参加人的openid,第0个为创建人的openid
-      applications: ["",], // 申请加入人的openid
+      applications: ["", ], // 申请加入人的openid
       votes: [1, ], // 参加人的投票，0为反对，1为赞同。创建人默认为1，其他人默认为0。
       signs: [0, ], // 参加人的签到，0为未签到，1为已签到。
       scores: [-1, ], // 参加人对项目评分，未评分为-1，范围0~10。
@@ -40,7 +40,7 @@ Page({
     // 用户相关
     currOpenid: "", // 当前用户openid
     isAdmin: false, // 当前用户是否为创建者
-    actors:[],  // 参与者的用户信息
+    actors: [], // 参与者的用户信息
   },
   /**
    * 生命周期函数--监听页面加载
@@ -58,6 +58,8 @@ Page({
       this.setData({
         isAdmin: true,
         hideAll: false,
+        confirmFlag: 0,
+        confirmText: "创建",
       })
       wx.setNavigationBarTitle({
         title: '创建协游',
@@ -87,7 +89,7 @@ Page({
             wx.cloud.callFunction({
               name: 'queryAllUsers',
               complete: res => {
-                if (res.result.query) {// 如果存在数据
+                if (res.result.query) { // 如果存在数据
                   var allUsers = res.result.queryRes.data
                   for (var i in allUsers) {
                     if (this.data.event.actors.indexOf(allUsers[i].openid) >= 0) {
@@ -108,7 +110,7 @@ Page({
               this.setData({
                 confirmFlag: 1,
                 confirmText: "更新",
-                isAdmin: true,  // 可修改项目值
+                isAdmin: true, // 可修改项目值
               })
             } else if (index > 0) { //  当前用户是参与者，按钮为退出
               this.setData({
@@ -215,11 +217,12 @@ Page({
         },
         complete: res => {
           console.log('addEvent调用结果:', res)
+          // 更新notice
           app.globalData.userInfo.notice.push({
+            a: "../../images/notice/add.png",
             dt: dateTimeUtil.formatDT(new Date()),
-            txt: "您创建了项目:" + that.data.event.name,
+            txt: "您" + that.data.confirmText + "了项目:<" + that.data.event.name + ">",
           })
-          // 数据库更新用户信息
           wx.cloud.callFunction({
             name: 'updateUser',
             data: {
@@ -232,16 +235,12 @@ Page({
                 wx.navigateBack({
                   delta: 1
                 })
+                wx.showToast({
+                  title: this.data.confirmText + '成功！',
+                })
               }
             },
             fail: console.error
-          })
-          //页面返回
-          wx.navigateBack({
-            delta: 1
-          })
-          wx.showToast({
-            title: '创建成功！',
           })
         },
         fail: console.error
@@ -249,13 +248,13 @@ Page({
     } else if (this.data.confirmFlag == 1 || this.data.confirmFlag == 2) { // 更新项目/申请加入操作
       if (this.data.confirmFlag == 2) { // 申请加入项目操作
         var index = this.data.event.applications.indexOf(this.data.currOpenid)
-        if (index < 0){
+        if (index < 0) {
           this.data.event.applications.push(this.data.currOpenid)
           this.setData({
             event: this.data.event,
           })
         }
-      } 
+      }
       //  数据库操作-更新项目
       wx.cloud.callFunction({
         name: 'updateEvent',
@@ -266,12 +265,30 @@ Page({
         complete: res => {
           console.log('updateEvent调用结果:', res)
           if (res.result.update) {
-            //页面返回
-            wx.navigateBack({
-              delta: 1
+            // 更新notice
+            app.globalData.userInfo.notice.push({
+              a: that.data.confirmText == "更新" ? "../../images/notice/update.png" : "../../images/notice/apply.png",
+              dt: dateTimeUtil.formatDT(new Date()),
+              txt: "您" + that.data.confirmText + "了项目:<" + that.data.event.name + ">",
             })
-            wx.showToast({
-              title: this.data.confirmText + '成功！',
+            wx.cloud.callFunction({
+              name: 'updateUser',
+              data: {
+                appData: app.globalData,
+              },
+              complete: res => {
+                console.log('updateUser调用结果:', res)
+                if (res.result.update) {
+                  //页面返回
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                  wx.showToast({
+                    title: that.data.confirmText + '成功！',
+                  })
+                }
+              },
+              fail: console.error
             })
           }
         },

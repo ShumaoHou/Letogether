@@ -55,6 +55,7 @@ Page({
                 gender: e.detail.userInfo.gender,
                 region: [e.detail.userInfo.province + "省", e.detail.userInfo.city + "市", "全部"],
                 notice: [{
+                  a: "../../images/notice/smile.png",
                   dt: dateTimeUtil.formatDT(new Date()), 
                   txt: "欢迎您加入协游大家庭!"
                   }],

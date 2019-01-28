@@ -6,7 +6,7 @@
       <!-- event-item头 -->
       <view class="feed-source">
         <view class="avatar">
-          <image src="../../images/notice/notice_a.png"></image>
+          <image src="{{item.a}}"></image>
         </view>
         <text>{{item.dt}}</text>
       </view>

@@ -34,6 +34,9 @@ App({
       })
     }
   },
+  /**
+   * 检查用户是否已注册
+   */
   userLoginCheck: function(cb) {
     var that = this
     var openid = ''

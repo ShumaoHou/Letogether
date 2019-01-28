@@ -11,6 +11,9 @@ Page({
    */
   onShow: function() {
     var that = this
+    that.setData({
+      feed: [],
+    })
     app.userLoginCheck(function (openid) {
       if (openid == "") { //未登录，跳转登陆页面
         wx.switchTab({
@@ -27,8 +30,12 @@ Page({
               // 将数据库查询结果保存全局变量
               app.globalData.userInfo = resData
               // 加载数据库的用户信息到本页面
+              for (var i in app.globalData.userInfo.notice) {
+                that.data.feed.push(app.globalData.userInfo.notice[app.globalData.userInfo.notice.length - i - 1])
+              }
+              // that.data.feed = app.globalData.userInfo.notice
               that.setData({
-                feed: app.globalData.userInfo.notice.reverse(),
+                feed: that.data.feed,
               })
             }
             wx.hideNavigationBarLoading() // 隐藏导航栏加载
