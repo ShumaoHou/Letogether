@@ -34,7 +34,7 @@
         <text class="item-more"> </text>
         <text class="item-more"> </text>
         <image class="item-more" mode="aspectFit" src="../../images/more_apply/no.png" bindtap='bindApplyNoTap' data-item="{{item}}"></image>
-        <modal title="加入失败" hidden="{{applyModalHidden}}" confirm-text="确定" bindconfirm="bindApplyConfirm">协游人数已满！</modal>
+        <modal title="加入失败" hidden="{{applyModalHidden}}" confirm-text="确定" bindconfirm="bindApplyConfirm" bindcancel="bindApplyConfirm">协游人数已满！</modal>
       </view>
       <!-- event-item内容 -->
       <view class="feed-content">

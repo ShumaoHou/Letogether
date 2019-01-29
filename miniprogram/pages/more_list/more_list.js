@@ -207,12 +207,13 @@ Page({
         if (res.result.query) { // 存在数据
           var event = res.result.queryRes.data[0].event
           if (event.number <= event.actors.length) { // 人数以满足设定
+            wx.hideNavigationBarLoading() // 隐藏导航栏加载
             this.setData({
-              deleteModalHidden: false,
+              applyModalHidden: false,
             })
           } else { // 人数未满
-            event.actors.push(item.applyUser.openid)
-            app.arrayRemove(event.apply, item.applyUser.openid)
+            event.actors.push(item.applyUser.openid)  // 添加项目的参加人员
+            app.arrayRemove(event.apply, item.applyUser.openid) // 移除项目的申请
             //  数据库操作-更新项目
             wx.cloud.callFunction({
               name: 'updateEvent',
@@ -240,7 +241,10 @@ Page({
                         wx.cloud.callFunction({
                           name: 'updateUser',
                           data: {
-                            appData: {userInfo: data},
+                            openid: item.applyUser.openid,
+                            appData: {
+                              userInfo: data
+                            },
                           },
                           complete: res => {
                             if (res.result.update) {
@@ -266,8 +270,69 @@ Page({
    * 点击函数--申请加入拒绝
    */
   bindApplyNoTap: function(e) {
+    var that = this
     var item = e.currentTarget.dataset.item // 传递event和user对
-
+    wx.showNavigationBarLoading() // 显示导航栏加载
+    // 更新项目信息
+    wx.cloud.callFunction({
+      name: 'queryEvent',
+      data: {
+        _id: item.applyEvent._id,
+      },
+      complete: res => {
+        if (res.result.query) { // 存在数据
+          var event = res.result.queryRes.data[0].event
+          app.arrayRemove(event.apply, item.applyUser.openid) // 移除项目的申请
+          //  数据库操作-更新项目
+          wx.cloud.callFunction({
+            name: 'updateEvent',
+            data: {
+              _id: res.result.queryRes.data[0]._id,
+              event: event,
+            },
+            complete: res => {
+              if (res.result.update) {
+                // 更新notice
+                wx.cloud.callFunction({
+                  name: 'queryUser',
+                  data: {
+                    openid: item.applyUser.openid,
+                  },
+                  complete: res => {
+                    if (res.result.query) { // 存在数据
+                      var data = res.result.queryRes.data[0]
+                      console.log(data)
+                      data.notice.push({
+                        a: "../../images/notice/delete.png",
+                        dt: dateTimeUtil.formatDT(new Date()),
+                        txt: "您对项目:<" + item.applyEvent.event.name + ">的申请已被拒绝！",
+                      })
+                      wx.cloud.callFunction({
+                        name: 'updateUser',
+                        data: {
+                          openid: item.applyUser.openid,
+                          appData: {
+                            userInfo: data
+                          },
+                        },
+                        complete: res => {
+                          if (res.result.update) {
+                            wx.hideNavigationBarLoading() // 隐藏导航栏加载
+                            that.queryAllEvents()
+                          }
+                        },
+                        fail: console.error
+                      })
+                    }
+                  }
+                })
+              }
+            },
+            fail: console.error
+          })
+        }
+      }
+    })
   },
   /**
    * 对话框--加入失败确定
