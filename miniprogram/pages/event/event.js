@@ -266,7 +266,12 @@ Page({
           })
         }
       } else if (this.data.confirmFlag == 3) { // 退出项目操作
-        
+        app.arrayRemove(that.data.event.actors, that.data.currOpenid) // 将当前用户从项目参与者移除
+        app.globalData.userInfo.notice.push({
+          a: "../../images/notice/logout.png",
+          dt: dateTimeUtil.formatDT(new Date()),
+          txt: "您退出了项目:<" + that.data.event.name + ">",
+        })
       }
       //  数据库操作-更新项目
       wx.cloud.callFunction({
