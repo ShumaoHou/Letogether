@@ -56,8 +56,6 @@
 
 .createEvent {
   position: fixed;
-  width: 100rpx;
-  height: 100rpx;
-  bottom: 10rpx;
-  right: 30rpx;
+  bottom: 0;
+  width: 100%;
 }
