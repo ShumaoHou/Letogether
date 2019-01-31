@@ -1,6 +1,6 @@
 /**
- * 注册函数
- * 将当前用户信息插入到数据库中。
+ * event创建函数
+ * 将协游event添加到数据库中。
  */
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
