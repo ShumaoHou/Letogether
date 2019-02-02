@@ -1,0 +1,7 @@
+organization=mndream-github
+projectKey=mndream_Letogether
+serverUrl=https://sonarcloud.io
+serverVersion=7.7.0.21605
+dashboardUrl=https://sonarcloud.io/dashboard?id=mndream_Letogether
+ceTaskId=AWirpywbWNPA34jNPJZ-
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWirpywbWNPA34jNPJZ-
