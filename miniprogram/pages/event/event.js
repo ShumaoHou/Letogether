@@ -1,11 +1,16 @@
 //event.js
+import { $init, $digest } from '../utils/common.util'
+
 var desData = require('../../data/data_des.js'); // 目的地信息json数据
 var dateTimeUtil = require('../../utils/dateTimeUtil.js')
+
 var app = getApp()
 
 Page({
   data: {
     // 界面信息
+    images: [], //图片
+    hiddenCustomName: true, //隐藏自定义地址
     hideAll: true, // 隐藏一切
     confirmText: "创建", // 确认按钮文本
     confirmFlag: 0, // 0为创建项目，1为更新项目，2为申请加入项目，3为退出项目
@@ -141,18 +146,75 @@ Page({
   bindNameInput: function(e) {
     this.data.event.name = e.detail.value
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /**
    * 选择器函数--目的地
    */
   bindDesChange: function(e) {
+
+    
+
     this.data.event.des = this.data.desArray[e.detail.value].name
     this.data.event.desIntro = this.data.desArray[e.detail.value].intro
     this.data.event.imageUrl = this.data.desArray[e.detail.value].imageUrl
+
+    this.data.hiddenCustomName = true
+    if (this.data.desArray[e.detail.value].name == "自定义") {
+      console.log("自定义")
+      
+      this.data.hiddenCustomName = false
+
+    }else{
+      this.data.hiddenCustomName = true
+      console.log(this.data.event.imageUrl)
+    }
+    
+    console.log(this.data.hiddenCustomName)
+    
+
     this.setData({
       desIndex: e.detail.value,
-      event: this.data.event
+      event: this.data.event,
+      hiddenCustomName: this.data.hiddenCustomName
     })
+
+   
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /**
    * 输入框函数--花费
    */
@@ -308,5 +370,52 @@ Page({
         fail: console.error
       })
     }
+  },
+
+
+
+
+
+
+
+
+  chooseImage(e) {
+    console.log("-------------")
+    console.log(e)
+    console.log(this.data.desArray[e.detail.value])
+    
+    console.log("-------------")
+    console.log(util.getClientSetting().domainName)
+    
+
+
+    //this.data.isAdmin 
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'],  //可选择原图或压缩后的图片
+      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
+      success: res => {
+        const images = this.data.images.concat(res.tempFilePaths)
+
+        // wx.saveFile({
+        //   tempFilePath: res.tempFilePaths,
+        // })
+        // 限制最多只能留下3张照片
+        this.data.images = images.length <= 3 ? images : images.slice(0, 3)
+        this.data.event.imageUrl = res.tempFilePaths
+        console.log(this.data.event.imageUrl )
+        this.setData({ event: this.data.event})
+        //$digest(this)
+      }
+    })
   }
+
+
+
+
+
+
 })
+
+
+
+

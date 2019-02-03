@@ -1,9 +1,20 @@
 <!-- event.wxml -->
 <view class="container more" hidden='{{hideAll}}'>
+
+
+
   <!-- 目的地图片 -->
   <view class="head flex-wrp">
-    <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix'></image>
+    <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix' bindtap="chooseImage" wx:if='{{isAdmin}}'></image>
+
+     <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix' bindtap="" wx:if='{{!isAdmin}}'></image>
   </view>
+
+
+
+
+
+
   <!-- 目的地简介 -->
   <view class="head">
     <view class="myitem-text flex-item">
@@ -29,6 +40,16 @@
         {{event.des}}
       </picker>
     </view>
+
+     <!-- 目的地--自定义 -->
+    <view class="my-item flex-wrp" hidden='{{hiddenCustomName}}'>
+      <view class="myitem-name flex-item">
+        <text>自定义：</text>
+      </view>
+      <input  class="myitem-text flex-item" placeholder="请输入目的地" ></input>
+    </view>
+
+
     <!-- 日期 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">

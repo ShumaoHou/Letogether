@@ -14,7 +14,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.5.2",
+	"libVersion": "2.4.3",
 	"appid": "wx6d128398b04d6b40",
 	"projectname": "xieyou",
 	"debugOptions": {
