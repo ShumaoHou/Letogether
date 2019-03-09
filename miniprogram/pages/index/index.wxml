@@ -25,4 +25,5 @@
     </view>
   </block>
   <image class="createEvent" bindtap="bindCreateEvent" src="../../images/notice/add.png"></image>
+  <image class="playInnerAudio" bindtap="bindPlayInnerAudio" src="../../images/tabBar/audio.png" animation="{{!bgm?0:animationData}}"></image>
 </scroll-view>
