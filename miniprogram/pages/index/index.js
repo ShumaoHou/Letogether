@@ -1,117 +1,108 @@
 //index.js
-
-var util = require('../../utils/util.js')
+var desData = require('../../data/data_des.js'); // 目的地信息json数据
 var app = getApp()
+
+const innerAudioContext = wx.createInnerAudioContext()
+
 Page({
   data: {
     feed: [],
-    feed_length: 0
+    // 背景音乐
+    mp3: "http://www.ytmp3.cn/down/58810.mp3",
+    bgm: false,
+    animationData: {},  // 播放按钮转动动画
   },
-  //事件处理函数
-  bindItemTap: function() {
+  /**
+   * 项目点击函数
+   */
+  bindEventTap: function(e) {
+    var id = e.currentTarget.dataset.id // 传递数据库_id
+    console.log("_id:", id)
     wx.navigateTo({
-      url: '../answer/answer'
+      url: '../event/event?id=' + id
     })
   },
-  bindQueTap: function() {
-    wx.navigateTo({
-      url: '../question/question'
-    })
-  },
+  /**
+   * ‘创建协游’按钮点击函数
+   */
   bindCreateEvent: function() {
     wx.navigateTo({
       url: '../event/event'
     })
   },
-  onLoad: function () {
-    console.log('onLoad')
+  /**
+   * 页面显示函数
+   */
+  onShow: function() {
     var that = this
-    //调用应用实例的方法获取全局数据
-    this.getData();
-  },
-  upper: function () {
-    wx.showNavigationBarLoading()
-    this.refresh();
-    console.log("upper");
-    setTimeout(function(){wx.hideNavigationBarLoading();wx.stopPullDownRefresh();}, 2000);
-  },
-  lower: function (e) {
-    wx.showNavigationBarLoading();
-    var that = this;
-    setTimeout(function(){wx.hideNavigationBarLoading();that.nextLoad();}, 1000);
-    console.log("lower")
-  },
-  //scroll: function (e) {
-  //  console.log("scroll")
-  //},
-
-  //网络请求数据, 实现首页刷新
-  refresh0: function(){
-    var index_api = '';
-    util.getData(index_api)
-        .then(function(data){
-          //this.setData({
-          //
-          //});
-          console.log(data);
-        });
-  },
-
-  //使用本地 fake 数据实现刷新效果
-  getData: function(){
-    var feed = util.getData2();
-    console.log("loaddata");
-    var feed_data = feed.data;
-    this.setData({
-      feed:feed_data,
-      feed_length: feed_data.length
-    });
-  },
-  refresh: function(){
-    wx.showToast({
-      title: '刷新中',
-      icon: 'loading',
-      duration: 3000
-    });
-    var feed = util.getData2();
-    console.log("loaddata");
-    var feed_data = feed.data;
-    this.setData({
-      feed:feed_data,
-      feed_length: feed_data.length
-    });
-    setTimeout(function(){
-      wx.showToast({
-        title: '刷新成功',
-        icon: 'success',
-        duration: 2000
-      })
-    },3000)
-
-  },
-
-  //使用本地 fake 数据实现继续加载效果
-  nextLoad: function(){
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 4000
+    app.userLoginCheck(function (openid) {
+      if (openid == "") { //未登录，跳转登陆页面
+        wx.switchTab({
+          url: '../more/more',
+        })
+      } else {
+        wx.showNavigationBarLoading() // 显示导航栏加载
+        console.log('onShow', openid)
+        wx.cloud.callFunction({
+          name: 'queryAllEvents',
+          complete: res => {
+            if (res.result.query) { // 如果存在数据
+              that.setData({
+                feed: res.result.queryRes.data
+              });
+              console.log("querAllEvents:", res.result.queryRes.data)
+            }
+            wx.hideNavigationBarLoading() // 隐藏导航栏加载
+          }
+        })
+      }
     })
-    var next = util.getNext();
-    console.log("continueload");
-    var next_data = next.data;
+    // 播放按钮转动动画
+    var animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease',
+    })
+    this.animation = animation
     this.setData({
-      feed: this.data.feed.concat(next_data),
-      feed_length: this.data.feed_length + next_data.length
-    });
-    setTimeout(function(){
-      wx.showToast({
-        title: '加载成功',
-        icon: 'success',
-        duration: 2000
+      animationData: animation.export()
+    })
+    var n = 0;
+    var m = true;
+    //连续动画需要添加定时器,所传参数每次+1就行
+    setInterval(function () {
+      n = n + 1;
+      if (m) {
+        this.animation.rotate(360 * (n)).scale(1.2, 1.2).step()
+        m = !m;
+      } else {
+        this.animation.rotate(360 * (n)).scale(1, 1).step()
+        m = !m;
+      }
+      this.setData({
+        animationData: this.animation.export()
       })
-    },3000)
-  }
+    }.bind(this), 1000)
 
-
+  },
+  /**
+   * 背景音乐播放按钮
+   */
+  bindPlayInnerAudio: function() {
+    let that = this;
+    if (that.data.bgm) {
+      that.setData({
+        bgm: false,
+      })
+      innerAudioContext.pause(); /**  暂停音乐 */
+    } else {
+      that.setData({
+        bgm: true,
+      })
+      // 播放音乐
+      innerAudioContext.autoplay = true
+      innerAudioContext.loop = true
+      innerAudioContext.src = that.data.mp3;
+      innerAudioContext.play()
+    }
+  },
 })

@@ -1,0 +1,48 @@
+<!--more_list.wxml-->
+<scroll-view scroll-y="true" class="container">
+  <!-- event循环列表--我创建的协游/我加入的协游 -->
+  <block wx:for="{{feed}}" wx:for-item="item" wx:key="_id" wx:if="{{!isApply}}">
+    <view class="feed-item">
+      <!-- event-item头 -->
+      <view class="feed-source">
+        <view class="avatar">
+          <image src="{{item.event.avatarUrl}}"></image>
+        </view>
+        <text>{{item.event.date}} {{item.event.time}}</text>
+        <image class="item-more" mode="aspectFit" src="{{list_type==0?'../../images/event/delete.png':''}}" bindtap='bindDeleteTap' data-id="{{item._id}}" data-name="{{item.event.name}}"></image>
+        <modal title="删除" hidden="{{deleteModalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="bindDeleteConfirm" bindcancel="bindDeleteCancel">确定删除名为“{{deleteItemName}}”的协游项目吗？</modal>
+      </view>
+      <!-- event-item内容 -->
+      <view class="feed-content">
+        <view class="answer-body" bindtap="bindEventTap" data-id="{{item._id}}">
+          <text class="answer-txt">{{item.event.name}} \n\n {{item.event.des}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- event循环列表--协游加入申请 -->
+  <block wx:for="{{feed}}" wx:for-item="item" wx:key="_id"  wx:if="{{isApply}}">
+    <view class="feed-item">
+      <!-- event-item头 -->
+      <view class="feed-source">
+        <view class="avatar">
+          <image src="../../images/notice/apply.png"></image>
+        </view>
+        <text>加入申请</text>
+        <image class="item-more" mode="aspectFit" src="../../images/more_apply/yes.png" bindtap='bindApplyYesTap' data-item="{{item}}"></image>
+        <text class="item-more"> </text>
+        <text class="item-more"> </text>
+        <image class="item-more" mode="aspectFit" src="../../images/more_apply/no.png" bindtap='bindApplyNoTap' data-item="{{item}}"></image>
+        <modal title="加入失败" hidden="{{applyModalHidden}}" confirm-text="确定" bindconfirm="bindApplyConfirm" bindcancel="bindApplyConfirm">协游人数已满！</modal>
+      </view>
+      <!-- event-item内容 -->
+      <view class="feed-content">
+        <view class="answer-body">
+          <text class="answer-txt">用户：'{{item.applyUser.nickName}}'\n
+          项目：'{{item.applyEvent.event.name}}'</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</scroll-view>

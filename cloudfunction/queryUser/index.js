@@ -12,8 +12,12 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
+  var openid = wxContext.OPENID
+  if (event.openid != undefined) {
+    openid = event.openid
+  }
   var res = await db.collection('users').where({
-    openid: wxContext.OPENID
+    openid: openid
   }).get()
   
   if (res.data.length >0) {

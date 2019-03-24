@@ -10,16 +10,20 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   var update = true
   var res = {}
-  console.log("更新：",event)
   try {
+    var openid = wxContext.OPENID
+    if (event.openid != undefined) {
+      openid = event.openid
+    }
     res = await db.collection('users').where({
-      openid: wxContext.OPENID
+      openid: openid
     }).update({
       data:{
         avatarUrl: event.appData.userInfo.avatarUrl,
         nickName: event.appData.userInfo.nickName,
         gender: event.appData.userInfo.gender,
         region: event.appData.userInfo.region,
+        notice: event.appData.userInfo.notice,
       },
     })
   } catch (e) {

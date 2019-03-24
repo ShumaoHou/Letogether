@@ -98,12 +98,6 @@
 .container .feed-item .feed-content{
   padding: 10rpx 0 0 0;
 }
-.container .feed-item .feed-content .question text{
-  font-size: 28rpx;
-  font-weight: 600px;
-  line-height: 40rpx;
-  text-space: 5rpx;
-}
 .container .feed-item .feed-content .answer-body{
   padding: 10rpx 0 0 0;
   /*height: 10rpx;*/
@@ -116,12 +110,13 @@
   padding: 10rpx 0  0;
   color: #a0acac;
 }
-.container .feed-item .feed-content .answer-actions view{
-  display: inline-block;
-  vertical-align: text-bottom;
-  padding: 0 10rpx 0 0;
-  font-size: 24rpx;
+
+.full-width{
+  width: 100%;
 }
-.container .feed-item .feed-content .answer-actions .dot ::after{
-  content: "•";
+.message{
+  padding: 0;
+  font-size: 38rpx;
+  color: #000;
 }
+

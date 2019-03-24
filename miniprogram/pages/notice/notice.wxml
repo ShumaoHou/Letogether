@@ -1,0 +1,21 @@
+<!--notice.wxml-->
+<scroll-view scroll-y="true" class="container">
+  <!-- event循环列表 -->
+  <block wx:for="{{feed}}" wx:for-item="item" wx:key="_id">
+    <view class="feed-item">
+      <!-- event-item头 -->
+      <view class="feed-source">
+        <view class="avatar">
+          <image src="{{item.a}}"></image>
+        </view>
+        <text>{{item.dt}}</text>
+      </view>
+      <!-- event-item内容 -->
+      <view class="feed-content">
+        <view class="answer-body">
+          <text class="answer-txt">{{item.txt}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</scroll-view>

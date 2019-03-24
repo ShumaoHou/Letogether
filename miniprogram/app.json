@@ -1,18 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/discovery/discovery",
-    "pages/notify/notify",
-    "pages/chat/chat",
+    "pages/notice/notice",
+    "pages/event/event",
     "pages/more/more",
-    "pages/answer/answer",
-    "pages/question/question",
-    "pages/user/user",
-    "pages/event/event"
+    "pages/more_user/more_user",
+    "pages/more_list/more_list"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#82a6f5",
+    "navigationBarBackgroundColor": "#123456",
     "navigationBarTitleText": "协游",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true
@@ -25,33 +22,21 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "",
-        "iconPath": "images/index.png",
-        "selectedIconPath": "images/index_focus.png"
+        "text": "协游",
+        "iconPath": "images/tabBar/index.png",
+        "selectedIconPath": "images/tabBar/index_f.png"
       },
       {
-        "pagePath": "pages/discovery/discovery",
-        "text": "",
-        "iconPath": "images/discovery.png",
-        "selectedIconPath": "images/discovery_focus.png"
-      },
-      {
-        "pagePath": "pages/notify/notify",
-        "text": "",
-        "iconPath": "images/ring.png",
-        "selectedIconPath": "images/ring_focus.png"
-      },
-      {
-        "pagePath": "pages/chat/chat",
-        "text": "",
-        "iconPath": "images/chat.png",
-        "selectedIconPath": "images/chat_focus.png"
+        "pagePath": "pages/notice/notice",
+        "text": "通知",
+        "iconPath": "images/tabBar/notice.png",
+        "selectedIconPath": "images/tabBar/notice_f.png"
       },
       {
         "pagePath": "pages/more/more",
-        "text": "",
-        "iconPath": "images/burger.png",
-        "selectedIconPath": "images/burger_focus.png"
+        "text": "我",
+        "iconPath": "images/tabBar/more.png",
+        "selectedIconPath": "images/tabBar/more_f.png"
       }
     ]
   },

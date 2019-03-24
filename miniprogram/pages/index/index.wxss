@@ -56,6 +56,16 @@
 
 .createEvent {
   position: fixed;
-  bottom: 0;
-  width: 100%;
+  width: 100rpx;
+  height: 100rpx;
+  bottom: 10rpx;
+  right: 30rpx;
+}
+
+.playInnerAudio{
+  position: fixed;
+  width: 100rpx;
+  height: 100rpx;
+  top: 20rpx;
+  right: 30rpx;
 }

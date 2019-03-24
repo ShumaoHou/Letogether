@@ -1,82 +1,113 @@
 <!-- event.wxml -->
-<view class="container more">
+<view class="container more" hidden='{{hideAll}}'>
+
+
+
+  <!-- 目的地图片 -->
   <view class="head flex-wrp">
-    <image class="eventInfo-avatar" src="./placeholder.png" background-size="cover" mode='widthFix'></image>
+    <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix' bindtap="chooseImage" wx:if='{{isAdmin}}'></image>
+
+     <image class="full-width" src="{{event.imageUrl}}" background-size="cover" mode='widthFix' bindtap="" wx:if='{{!isAdmin}}'></image>
   </view>
 
-  <view class="my">
 
+
+
+
+
+  <!-- 目的地简介 -->
+  <view class="head">
+    <view class="myitem-text flex-item">
+      <text>{{event.desIntro}}</text>
+    </view>
+  </view>
+  <view class="my">
+    <!-- 项目名称 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>项目名称：</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{event.name}}" />
+        <input maxlength="10" value='{{event.name}}' placeholder="请输入项目名称" bindblur='bindNameInput' disabled='{{!isAdmin}}' />
       </view>
     </view>
-
+    <!-- 目的地 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>目的地：</text>
       </view>
-      <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="{{event.destination}}" />
-      </view>
+      <picker class="myitem-text flex-item" bindchange="bindDesChange" value="{{desIndex}}" range='{{desNameArray}}' disabled='{{!isAdmin}}'>
+        {{event.des}}
+      </picker>
     </view>
 
+     <!-- 目的地--自定义 -->
+    <view class="my-item flex-wrp" hidden='{{hiddenCustomName}}'>
+      <view class="myitem-name flex-item">
+        <text>自定义：</text>
+      </view>
+      <input  class="myitem-text flex-item" placeholder="请输入目的地" ></input>
+    </view>
+
+
+    <!-- 日期 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>日期：</text>
       </view>
-      <picker class="myitem-text flex-item" mode="date" bindchange="bindDateChange" value="{{event.date}}" start="2019-01-01" end="2100-01-01">
-        <view class="picker">
-          {{event.date}}
-        </view>
+      <picker class="myitem-text flex-item" mode="date" bindchange="bindDateChange" value="{{event.date}}" start="2019-01-01" end="2100-01-01" disabled='{{!isAdmin}}'>
+        {{event.date}}
       </picker>
     </view>
-
+    <!-- 时间 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>时间：</text>
       </view>
-      <picker class="myitem-text flex-item" mode="time" bindchange="bindTimeChange" value="{{event.time}}" start="00:00" end="23:59">
-        <view class="picker">
-          {{event.time}}
-        </view>
+      <picker class="myitem-text flex-item" mode="time" bindchange="bindTimeChange" value="{{event.time}}" start="00:00" end="23:59" disabled='{{!isAdmin}}'>
+        {{event.time}}
       </picker>
     </view>
-
+    <!-- 人数 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>人数：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{event.number}}" range="{{event.numberArray}}">
-        <view class="picker">
-          {{event.number}}
-        </view>
+      <picker class="myitem-text flex-item" bindchange="bindNumberChange" value="{{numberIndex}}" range="{{numberArray}}" disabled='{{!isAdmin}}'>
+        {{event.number}}
       </picker>
     </view>
-
+    <!-- 出行方式 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
         <text>出行方式：</text>
       </view>
-      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{event.travel}}" range="{{event.travelArray}}">
-        <view>
-          {{event.travel}}
-        </view>
+      <picker class="myitem-text flex-item" bindchange="bindTravelChange" value="{{travelIndex}}" range="{{travelArray}}" disabled='{{!isAdmin}}'>
+        {{event.travel}}
       </picker>
     </view>
-
+    <!-- 预计花费 -->
     <view class="my-item flex-wrp">
       <view class="myitem-name flex-item">
-        <text>预计花费：</text>
+        <text>预计花费：\n(元)</text>
       </view>
       <view class="myitem-text flex-item">
-        <input maxlength="10" placeholder="0" />
+        <input maxlength="10" value="{{event.cost}}" bindblur='bindCostInput' disabled='{{!isAdmin}}' />
       </view>
     </view>
-
-    <button bindtap="bindConfirm"> 确认创建 </button>
+    <!-- 参与者--循环列表 -->
+    <block wx:for="{{actors}}" wx:for-item="item" wx:for-index="index" wx:key="_id">
+      <view class="feed-item">
+        <!-- event-item头 -->
+        <view class="feed-source">
+          <view class="avatar">
+            <image src="{{item.avatarUrl}}"></image>
+          </view>
+          <text>{{item.nickName}}</text>
+        </view>
+      </view>
+    </block>
+    <!-- 确认创建 -->
+    <button bindtap="bindConfirm" type="primary"> {{confirmText}} </button>
   </view>
 </view>
