@@ -45,3 +45,25 @@
 .my .my-item:last-child .myitem-name{
   border-bottom: none;
 }
+
+.star-image{
+  position: relative;
+  top: 6rpx; 
+  width: 30rpx;
+  height: 30rpx;
+  src: "../../images/event/normal.png";
+}
+
+.item{
+  position: absolute;
+  top: 6rpx; 
+  width: 15rpx;
+  height: 30rpx;
+}
+
+.bright789_view_hide{ 
+ display: none; 
+} 
+.bright789_view_show{ 
+ display: block; 
+} 

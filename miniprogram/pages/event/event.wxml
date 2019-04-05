@@ -95,6 +95,27 @@
         <input maxlength="10" value="{{event.cost}}" bindblur='bindCostInput' disabled='{{!isAdmin}}' />
       </view>
     </view>
+<text>我的评分：</text>
+<!-- 我的评分 -->
+    <view class="{{showView?'bright789_view_show':'bright789_view_hide'}}">
+      <view class="my-item flex-wrp ">
+        <view class="myitem-name">
+          <text>我的评分：</text>
+        </view>
+        <view class="myitem-name">
+          <block wx:for="{{stars}}" wx:key="_id">
+
+            <image class="star-image" style="left: {{item*0.5}}rpx" src="{{key > item ?(key-item == 1?halfSrc:selectedSrc) : normalSrc}}">
+              <view class="item" style="left:0rpx" data-key="{{item+1}}" bindtap="selectLeft"></view>
+              <view class="item" style="left:1rpx" data-key="{{item+2}}" bindtap="selectRight"></view>
+            </image>
+          </block>
+          <text>{{key}}分</text>
+        </view>
+      </view>
+    </view>
+
+
     <!-- 参与者--循环列表 -->
     <block wx:for="{{actors}}" wx:for-item="item" wx:for-index="index" wx:key="_id">
       <view class="feed-item">

@@ -1,3 +1,4 @@
+const regeneratorRuntime = require('../common/regenerator-runtime.js')
 //event.js
 import { $init, $digest } from '../utils/common.util'
 
@@ -8,6 +9,11 @@ var app = getApp()
 
 Page({
   data: {
+    stars: [0, 2, 4, 6, 8],
+    normalSrc: '../../images/event/normal.png',
+    selectedSrc: '../../images/event/selected.png',
+    halfSrc: '../../images/event/half.png',
+    key: 0,//评分
     // 界面信息
     images: [], //图片
     hiddenCustomName: true, //隐藏自定义地址
@@ -41,11 +47,14 @@ Page({
       scores: [-1, ], // 参加人对项目评分，未评分为-1，范围0~10。
       score: 10, // 项目最终得分
       avatarUrl: "", // 项目创建人头像
+      myscore: 0,
+      grade: []
     },
     // 用户相关
     currOpenid: "", // 当前用户openid
     isAdmin: false, // 当前用户是否为创建者
     actors: [], // 参与者的用户信息
+    Showview: true
   },
   /**
    * 生命周期函数--监听页面加载
@@ -90,6 +99,20 @@ Page({
               event: res.result.queryRes.data[0].event,
               hideAll: false,
             })
+            //查询我的评分
+            if (this.data.event.grade) {
+              var grades = this.data.event.grade
+              console.log(this.data.event.grade)
+              for (var i in grades) {
+                if (grades[i].openid == app.globalData.userInfo.openid) {
+                  that.setData({
+                    key: grades[i].myscore
+                  })
+
+                }
+              }
+            }
+
             // 查询所有参与者，并保存到本页面
             wx.cloud.callFunction({
               name: 'queryAllUsers',
@@ -116,16 +139,19 @@ Page({
                 confirmFlag: 1,
                 confirmText: "更新",
                 isAdmin: true, // 可修改项目值
+                showView: true
               })
             } else if (index > 0) { //  当前用户是参与者，按钮为退出
               this.setData({
                 confirmFlag: 3,
                 confirmText: "退出",
+                showView: true
               })
             } else { // 非本项目成员，按钮为申请加入
               this.setData({
                 confirmFlag: 2,
                 confirmText: "申请加入",
+                showView: false
               })
             }
           }
@@ -407,10 +433,91 @@ Page({
         //$digest(this)
       }
     })
+  },
+
+
+//点击右边,半颗星
+  selectLeft: function (e) {
+    var key = e.currentTarget.dataset.key
+    if (this.data.key == 1 && e.currentTarget.dataset.key == 1) {
+      //只有一颗星的时候,再次点击,变为0颗
+      key = 0;
+    }
+    console.log("得" + key + "分")
+    this.data.event.myscore = key
+    this.setData({
+      key: key
+
+    })
+    app.globalData.grade = this.data.event.grade
+
+    if (this.data.event.grade) {
+      var grades = this.data.event.grade
+      var flag = 0
+      var sum = 0
+      for (var i in grades) {
+        if (app.globalData.grade[i].openid == grades[i].openid) {
+          app.globalData.grade[i].myscore = key
+          flag = 1
+        }
+      }
+
+      if (flag == 0) {
+        app.globalData.grade.push({ openid: app.globalData.userInfo.openid, myscore: key })
+        this.data.event.grade = app.globalData.grade
+      }
+      flag = 0
+      //计算项目平均分
+      for (var i in app.globalData.grade) {
+        sum = sum + grades[i].myscore
+      }
+      sum = sum / grades.length
+      this.data.event.score = sum
+    } else {
+      app.globalData.grade.push({ openid: app.globalData.userInfo.openid, myscore: key })
+      this.data.event.grade = app.globalData.grade
+      this.data.event.score = app.globalData.grade[0].myscore
+    }
+    console.log(this.data.event.grade)
+  },
+  //点击左边,整颗星
+  selectRight: function (e) {
+    var key = e.currentTarget.dataset.key
+    console.log("得" + key + "分")
+    this.setData({
+      key: key
+    })
+    app.globalData.grade = this.data.event.grade
+
+    if (this.data.event.grade) {
+      var grades = this.data.event.grade
+      var flag = 0
+      var sum = 0
+      for (var i in grades) {
+        if (app.globalData.grade[i].openid == grades[i].openid) {
+          app.globalData.grade[i].myscore = key
+          flag = 1
+        }
+      }
+
+      if (flag == 0) {
+        app.globalData.grade.push({ openid: app.globalData.userInfo.openid, myscore: key })
+        this.data.event.grade = app.globalData.grade
+      }
+      flag = 0
+      //计算项目平均分
+      for (var i in app.globalData.grade) {
+        sum = sum + grades[i].myscore
+      }
+      sum = sum / grades.length
+      this.data.event.score = sum
+    } else {
+      app.globalData.grade.push({ openid: app.globalData.userInfo.openid, myscore: key })
+      this.data.event.grade = app.globalData.grade
+      this.data.event.score = app.globalData.grade[0].myscore
+    }
+    console.log(this.data.event.grade)
   }
-
-
-
 
 
 

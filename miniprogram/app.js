@@ -15,6 +15,12 @@ App({
       region: ['江苏省', '南京市', '鼓楼区'], //地区
       notice: [], // 针对个人的通知
     },
+    allData: {
+      albums: []
+    },
+    id: null,//个人相册user表的_id
+    nikeName: '',//个人相册user表的nikeName,
+    grade: []//项目评分集合
   },
   /**
    * 生命周期函数--监听页面加载

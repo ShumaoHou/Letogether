@@ -45,6 +45,17 @@
         <text>协游加入申请</text>
       </view>
     </view>
+<!-- 个人相册 -->
+    <view class="my-item flex-wrp"  bindtap='bindAlbum' hidden='{{!logged}}'>
+      <view class="myitem-icon flex-item" >
+        <image src="../../images/more/apply.png"></image>
+      </view>
+      <view class="myitem-name flex-item">
+        <text>个人相册</text>
+      </view>
+      
+    </view>
+
 
   </view>
 </view>

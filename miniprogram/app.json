@@ -5,7 +5,11 @@
     "pages/event/event",
     "pages/more/more",
     "pages/more_user/more_user",
-    "pages/more_list/more_list"
+    "pages/more_list/more_list",
+    "pages/personalalbum/personalalbum",
+    "pages/album/add",
+    "pages/photos/add",
+    "pages/photos/photos"
   ],
   "window": {
     "backgroundTextStyle": "light",

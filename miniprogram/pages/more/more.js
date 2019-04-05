@@ -105,4 +105,12 @@ Page({
       url: '../more_list/more_list?type=apply'
     })
   },
+  /**
+  * 个人相册
+  */
+  bindAlbum: function (e) {
+    wx.navigateTo({
+      url: '../personalalbum/personalalbum'
+    })
+  },
 })
