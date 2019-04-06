@@ -172,31 +172,10 @@ Page({
   bindNameInput: function(e) {
     this.data.event.name = e.detail.value
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    * 选择器函数--目的地
    */
   bindDesChange: function(e) {
-
-    
-
     this.data.event.des = this.data.desArray[e.detail.value].name
     this.data.event.desIntro = this.data.desArray[e.detail.value].intro
     this.data.event.imageUrl = this.data.desArray[e.detail.value].imageUrl
@@ -204,43 +183,19 @@ Page({
     this.data.hiddenCustomName = true
     if (this.data.desArray[e.detail.value].name == "自定义") {
       console.log("自定义")
-      
       this.data.hiddenCustomName = false
-
     }else{
       this.data.hiddenCustomName = true
       console.log(this.data.event.imageUrl)
     }
-    
     console.log(this.data.hiddenCustomName)
     
-
     this.setData({
       desIndex: e.detail.value,
       event: this.data.event,
       hiddenCustomName: this.data.hiddenCustomName
     })
-
-   
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    * 输入框函数--花费
    */
@@ -398,23 +353,7 @@ Page({
     }
   },
 
-
-
-
-
-
-
-
   chooseImage(e) {
-    console.log("-------------")
-    console.log(e)
-    console.log(this.data.desArray[e.detail.value])
-    
-    console.log("-------------")
-    console.log(util.getClientSetting().domainName)
-    
-
-
     //this.data.isAdmin 
     wx.chooseImage({
       sizeType: ['original', 'compressed'],  //可选择原图或压缩后的图片
@@ -430,7 +369,6 @@ Page({
         this.data.event.imageUrl = res.tempFilePaths
         console.log(this.data.event.imageUrl )
         this.setData({ event: this.data.event})
-        //$digest(this)
       }
     })
   },
@@ -518,11 +456,4 @@ Page({
     }
     console.log(this.data.event.grade)
   }
-
-
-
 })
-
-
-
-

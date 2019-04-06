@@ -14,8 +14,8 @@ exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
   var res = await db
     .collection('events')
-    .orderBy('event.date', 'asc')
-    .orderBy('event.time', 'asc')
+    .orderBy('event.date', 'desc')
+    .orderBy('event.time', 'desc')
     .orderBy('event.score', 'desc')
     .get()
   if (res.data.length > 0) {
